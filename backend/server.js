@@ -1,45 +1,25 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-
+import express from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import db from "./config/Database.js";
+import router from "./routes/index.js";
+dotenv.config();
 const app = express();
+
+
+app.use(express.urlencoded({ extended: true }));
+
+try {
+    await db.authenticate();
+    console.log('Database Connected...');
+} catch (error) {
+    console.error(error);
+}
+
+app.use(cors({ credentials:true, origin:['http://localhost:3000','http://localhost:3001'] }));
+app.use(cookieParser());
 app.use(express.json());
-app.use(cors());
+app.use(router);
 
-mongoose.connect('mongodb://localhost:27017/suivi-depenses', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-const expenseSchema = new mongoose.Schema({
-  name: String,
-  amount: Number,
-});
-
-const Expense = mongoose.model('Expense', expenseSchema);
-
-app.get('/expenses', async (req, res) => {
-  try {
-    const expenses = await Expense.find();
-    res.json(expenses);
-  } catch (error) {
-    res.status(500).json({ error: 'Erreur lors de la récupération des dépenses' });
-  }
-});
-
-app.post('/expenses', async (req, res) => {
-  const { name, amount } = req.body;
-  const newExpense = new Expense({ name, amount });
-
-  try {
-    await newExpense.save();
-    res.status(201).json(newExpense);
-  } catch (error) {
-    res.status(400).json({ error: 'Erreur lors de l\'ajout de la dépense' });
-  }
-});
-
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log(`Serveur en cours d'exécution sur le port ${port}`);
-});
+app.listen(5000, ()=> console.log('Server running at port 5000'));

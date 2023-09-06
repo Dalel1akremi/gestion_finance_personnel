@@ -1,0 +1,141 @@
+.login_container {
+	width: 100%;
+	min-height: 100vh;
+	background-image:url("media/img.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+
+	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.login_form_container {
+	width: 800px;
+	height: 400px;
+	display: flex;
+	margin-left: 30px;
+	margin-right: 30px;
+	border-radius: 30px;
+	margin-top: -1100px;
+	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
+		0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+}
+#abir{
+margin-top: 50px;
+text-align: justify;
+color:#edf5f3;
+margin-right: 80px;
+}
+.left {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color:gray;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+#a{ 
+	font-size: 70px;
+  font-weight: 600;
+  background-image: linear-gradient(to left, #553c9a, #b393d3);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  margin-bottom: 30px;
+	color:#f34646}
+.form_container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.form_container h1 {
+	font-size: 20px;
+	margin-top: 20px;
+}
+
+.input {
+	outline: none;
+	border: none;
+	width: 370px;
+	padding: 15px;
+	border-radius: 10px;
+	background-color: #edf5f3;
+	margin: 5px 0;
+	font-size: 14px;
+}
+
+.error_msg {
+	width: 370px;
+	padding: 15px;
+	margin: 5px 0;
+	font-size: 14px;
+	background-color: #f34646;
+	color: white;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.right {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: white;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.right h1 {
+	margin-top: 0;
+	color: white;
+	font-size: 40px;
+	align-self: center;
+}
+
+.white_btn,
+.green_btn {
+	border: none;
+	outline: none;
+	padding: 12px 0;
+	background-color: white;
+	border-radius: 20px;
+	width: 180px;
+	font-weight: bold;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.green_btn {
+	background-color: #25685c;
+	color: white;
+	margin: 10px;
+}
+.red_btn{
+	border: none;
+	outline: none;
+	padding: 12px 0;
+	background-color: gray;
+	border-radius: 20px;
+	width: 180px;
+	font-weight: bold;
+	font-size: 14px;
+	cursor: pointer;
+	color:azure;
+}
+#titre {
+	font-family: "Dancing Script";
+	margin-left: 55px;
+	font-weight:bold;
+	float: left;
+	font-size:35px;
+	margin-top: 10px;
+	margin-bottom: 1500px;
+text-align: center;
+  }

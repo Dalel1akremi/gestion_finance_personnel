@@ -1,0 +1,73 @@
+
+#page-container {
+    width: 100%;
+	min-height: 100vh;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+    
+  }
+#formcont{}
+  
+  #page-title {
+    font-size: 60px;
+    margin-bottom: 20px;
+
+  }
+  
+  #number-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    outline: none;
+	border: none;
+	width: 370px;
+	padding: 15px;
+	border-radius: 10px;
+	background-color: #edf5f3;
+	margin: 5px 0;
+	font-size: 14px;
+  }
+  
+  
+  
+  #number-input button {
+    outline: none;
+	border: none;
+	width: 370px;
+	padding: 15px;
+	border-radius: 10px;
+	background-color: #edf5f3;
+	margin: 5px 0;
+	font-size: 14px;
+  }
+  
+  #number-input button:hover {
+    background-color: gray;
+  }
+  
+  #result {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  #afficher{
+    outline: none;
+	border: none;
+	width: 370px;
+	padding: 15px;
+	border-radius: 10px;
+	background-color: #edf5f3;
+	margin: 5px 0;
+	font-size: 14px;
+    border: none;
+	outline: none;
+	padding: 12px 0;
+	background-color: gray;
+	border-radius: 20px;
+	width: 180px;
+	font-weight: bold;
+	font-size: 14px;
+	cursor: pointer;
+	color:azure;
+  }

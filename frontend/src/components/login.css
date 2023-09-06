@@ -11,6 +11,18 @@
 	align-items: center;
 	justify-content: center;
 }
+.login_containera{
+	width: 100%;
+	min-height: 100vh;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+
+	background-color: gray;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
 .login_form_container {
 	width: 780px;

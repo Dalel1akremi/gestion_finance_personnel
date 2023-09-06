@@ -74,15 +74,17 @@ const Login = () => {
 							className="input"
 						/>
 						{msg && <div className="error_msg">{msg}</div>}
-						<button type="submit" className="red_btn">
+						<a href="/acceuil">
+						<button type="submit" className="red_btn" >
 							Sing In
 						</button>
+						</a>
 					</form>
 				</div>
 				<div className="left ">
 					<h1>create Account</h1>
 					<a href="/signup">
-						<button type="button" className="white_btn">
+						<button type="button" className="white_btn" >
 							Sing Up
 						</button>
 					</a>

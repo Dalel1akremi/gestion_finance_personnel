@@ -2,6 +2,7 @@ import React from "react";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Singup";
+import NumberInput from "./components/acceuil";
 import { Fragment } from "react";
 import { BrowserRouter,Route,Redirect} from "react-router-dom";
 import './App.css'
@@ -19,6 +20,7 @@ function App() {
       
       <Route  path="/signup" ><Signup/></Route>
 		 	<Route path="/login" ><Login/></Route>
+       <Route  path="/acceuil" ><NumberInput/></Route>
        {user && <Route path="/" ><Home/></Route>} 
 			{! user && <Route  exact path="/" > <Redirect  to="/login" /></Route>}
       </BrowserRouter>

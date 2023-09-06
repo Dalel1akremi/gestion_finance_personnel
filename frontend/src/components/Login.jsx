@@ -36,12 +36,9 @@ const Login = () => {
 	return (
 		
 		<div className="login_container" >
-			<span>
-			<div id="titre">Gestion de finance personnelle.
-			<br>
-			</br>
-			<h5 id="abir">Bienvenue sur notre site web dédié au suivi des dépenses personnelles, votre outil essentiel pour mieux gérer votre argent. Suivez vos dépenses, prenez le contrôle de vos finances, et atteignez vos objectifs financiers. Explorez nos fonctionnalités dès maintenant.</h5></div>
-			</span>
+			<div id="titre">Gestion de Finance Personnelle</div>
+			<h5 id="abir">Bienvenue sur notre site web dédié au suivi des dépenses <br></br>personnelles, votre outil essentiel pour mieux gérer votre <br></br>argent.<br></br> Suivez vos dépenses, prenez le contrôle de vos finances et<br></br> atteignez vos objectifs financiers.<br></br> Explorez nos fonctionnalités dès maintenant.</h5>
+			
 			<div className="login_form_container">
 				<div className="right">
 					<form  onSubmit={Auth}  className="form_container" >

@@ -18,7 +18,7 @@
 	background-size: cover;
 	background-attachment: fixed;
 
-	background-color: gray;
+	background-color: white;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -181,3 +181,8 @@ ul {
 	float: left;
 	font-size:1.7em;
   }
+  #result {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px; }
+

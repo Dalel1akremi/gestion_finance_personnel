@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Depense from "../models/Depense.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 export const Register = async(req, res) => {
@@ -43,4 +44,21 @@ export const Login = async(req, res) => {
     } catch (error) {
         res.status(404).json({msg:"User Not Found "});
     }
+}
+export const AjoutDepense = async(req, res) => {
+    const {  Montant,Categorie,Date,Description} = req.body;
+    
+    try {
+        await Depense.create({       
+            Montant: Montant,
+            Categorie:Categorie,
+            Date: Date,
+            Description: Description
+        });
+        res.json({msg: "Ajouté avec succée"});
+    } catch (error) {
+        console.log(error);
+        return res.status(404).json({msg: "Eror"});
+
+    } 
 }

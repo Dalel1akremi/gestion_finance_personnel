@@ -20,7 +20,7 @@ const Login = () => {
                    
 				localStorage.setItem("token",res.data);
 				 
-				window.location = "/";
+				window.location = "/acceuil";
         } catch (error) {
             if  (
 				error.response &&

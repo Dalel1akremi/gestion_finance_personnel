@@ -21,7 +21,7 @@ function App() {
 		 	<Route path="/login" ><Login/></Route>
        <Route  path="/acceuil" ><NumberInput/></Route>
        <Route path="/AjoutDepense" ><AjoutDepense/></Route>
-       {user && <Route path="/" ><Home/></Route>} 
+       {user && <Route path="/Home" ><Home/></Route>} 
 			{! user && <Route  exact path="/" > <Redirect  to="/login" /></Route>}
       </BrowserRouter>
     </Fragment>

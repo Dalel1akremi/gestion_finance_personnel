@@ -62,3 +62,16 @@ export const AjoutDepense = async(req, res) => {
 
     } 
 }
+export const getRecentDepenses = async (req, res) => {
+    try {
+      const recentDepenses = await Depense.findAll({
+        order: [['id','DESC']],
+        limit: 1, 
+      });
+  
+      res.json(recentDepenses);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ msg: 'Error while fetching recent depenses' });
+    }
+  };

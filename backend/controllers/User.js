@@ -75,3 +75,16 @@ export const getRecentDepenses = async (req, res) => {
       return res.status(500).json({ msg: 'Error while fetching recent depenses' });
     }
   };
+export const Historique = async(req, res)  => {
+    try {
+        const Historique = await Depense.findAll({
+          order: [['id', 'DESC']],
+          limit:1000000000000000,
+        });
+    
+        res.json(Historique);
+      } catch (error) {
+        console.error(error);
+        return res.status(500).json({ msg: 'Error while fetching recent depenses' });
+      }
+    };

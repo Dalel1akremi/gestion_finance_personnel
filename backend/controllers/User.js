@@ -3,6 +3,7 @@ import Depense from "../models/Depense.js";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
+
 export const Register = async(req, res) => {
     const {  firstName,lastName,email,password } = req.body;
     const salt = await bcrypt.genSalt();
@@ -116,3 +117,17 @@ export const Email= async(req, res) => {
             }
           });
         };
+    export const Statistique = async (req, res) => {
+        try {
+          // Group and sum the Montant by Categorie
+          const statistics = await Depense.findAll({
+            attributes: ['Categorie', [sequelize.fn('SUM', sequelize.col('Montant')), 'Total']],
+            group: ['Categorie'],
+          });
+      
+          res.json(statistics);
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ msg: 'Error while fetching statistics' });
+        }
+      };

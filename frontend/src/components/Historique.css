@@ -1,0 +1,43 @@
+.essential-section{
+	width: 100%;
+	min-height: 100vh;
+	background-image:url("media/img.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.middle-section{
+	background-color: aliceblue;
+	width: 90%;
+	height: 50%;
+	text-align: center;
+}
+#h{
+	color:brown;
+}
+  /* ***************** NAVBAR ***************** */
+  nav {
+	overflow: hidden;
+	background-color:white;
+	position: fixed;
+	width: 100%;
+	opacity: 0.9;
+  }
+  header li {
+	float: right;
+	font-size: 1.2em;
+  }
+  header li a {
+	text-decoration: none;
+	text-align: center;
+	padding: 18px 16px;
+  }
+  #logo {
+	
+	font-weight:bold;
+	float: left;
+	font-size:1.7em;
+  }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link} from "react-router-dom";
 import './Singup.css';
+import'./AjoutDepense.css';
 
 
 const AjoutDepense = () => {
@@ -30,6 +31,19 @@ const AjoutDepense = () => {
 
 
 	return (
+		<div>
+<header>
+			<nav>
+			  <ul>
+				<li><a href="/contact">Contact</a></li>
+				<li><a href="/Historique">Historique</a></li>
+				<li><a href="/acceuil">Acceuil</a></li>
+				<li><a href="/Login">Login</a></li>
+				<li id="logo" ><a href="/Login">Gestion de Finance Personnelle</a></li>
+			  </ul>
+			</nav>
+		  </header>
+          
 		<div className="signup_container">
 			<div className="signup_form_container">
 				<div className="right">
@@ -74,6 +88,7 @@ const AjoutDepense = () => {
 					</form>
 				</div>
 			</div>
+		</div>
 		</div>
 	);
 };

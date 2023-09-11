@@ -40,10 +40,12 @@ function NumberInput() {
     <header>
 			<nav>
 			  <ul>
-				<li><a href="/Login">Deconnecter</a></li>
-        <li><a href="">Contact</a></li>
-				<li><a href="">Historique</a></li>
-				<li id="logo" ><a href="">Gestion de Finance Personnelle</a></li>
+        <li><a href="/Login">Se deconnecter</a></li>
+        <li><a href="Statistique">Statistique</a></li>
+        <li><a href="/Historique">Historique</a></li>
+        <li><a href="/AjoutDepense">Ajout Depense</a></li>
+        <li><a href="/acceuil">Acceuil</a></li>
+        <li id="logo" ><a href="/acceuil">Gestion de Finance Personnelle</a></li>
 			  </ul>
 			</nav>
 		  </header>

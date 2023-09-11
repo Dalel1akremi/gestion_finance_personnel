@@ -39,10 +39,10 @@ const Login = () => {
 				<header>
 			<nav>
 			  <ul>
-				<li><a href="">Contact</a></li>
-				<li><a href="">Historique</a></li>
-				<li><a href="/Login">Acceuille</a></li>
-				<li id="logo" ><a href="">Gestion de Finance Personnelle</a></li>
+				<li><a href="Contact">Contact</a></li>
+				<li><a href="Historique">Historique</a></li>
+				<li><a href="/acceuil">Acceuille</a></li>
+				<li id="logo" ><a href="Login">Gestion de Finance Personnelle</a></li>
 			  </ul>
 			</nav>
 		  </header>

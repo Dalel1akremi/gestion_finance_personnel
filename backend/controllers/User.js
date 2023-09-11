@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import Depense from "../models/Depense.js";
 import bcrypt from "bcryptjs";
+import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 export const Register = async(req, res) => {
     const {  firstName,lastName,email,password } = req.body;
@@ -88,3 +89,30 @@ export const Historique = async(req, res)  => {
         return res.status(500).json({ msg: 'Error while fetching recent depenses' });
       }
     };
+export const Email= async(req, res) => {
+    const {name, email, message } = req.body;
+  
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+            user: 'yakinebenali5@gmail.com', 
+        pass: 'offpdprxkhmnutjd' 
+        },});
+        const mailOptions = {
+            from:'abir@gmail.com',
+            to: 'yakinebenali5@gmail.com',
+            subject: `New Contact Form gestion de finance personnel from ${name}`,
+            text: message,
+            replyTo: email,
+          };
+        
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.error(error);
+              res.status(500).json({ success: false, message: 'Email not sent' });
+            } else {
+              console.log('Email sent successfully: ' + info.response);
+              res.json({ success: true, message: 'Email sent successfully' });
+            }
+          });
+        };

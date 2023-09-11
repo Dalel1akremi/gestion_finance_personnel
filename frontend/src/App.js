@@ -3,6 +3,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Singup";
 import NumberInput from "./components/acceuil";
+import Contact from "./components/Contact";
 import AjoutDepense from "./components/AjoutDepense";
 import Historique from "./components/Historique";
 import { Fragment } from "react";
@@ -19,12 +20,13 @@ function App() {
       <BrowserRouter>
       
       <Route  path="/signup" ><Signup/></Route>
-		 	<Route path="/login" ><Login/></Route>
+		 	<Route path="/Home" ><Home/></Route>
        <Route  path="/acceuil" ><NumberInput/></Route>
        <Route  path="/Historique" ><Historique/></Route>
        <Route path="/AjoutDepense" ><AjoutDepense/></Route>
-       {user && <Route path="/Home" ><Home/></Route>} 
-			{! user && <Route  exact path="/" > <Redirect  to="/login" /></Route>}
+       <Route path="/Contact" ><Contact/></Route>
+       {user && <Route path="/" ><Login/></Route>} 
+			{! user && <Route  exact path="/" > <Redirect  to="/Login" /></Route>}
       </BrowserRouter>
     </Fragment>
 

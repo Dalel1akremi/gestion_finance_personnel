@@ -6,6 +6,7 @@ import NumberInput from "./components/acceuil";
 import Contact from "./components/Contact";
 import AjoutDepense from "./components/AjoutDepense";
 import Historique from "./components/Historique";
+import ExpenseStatistics from "./components/Statistique";
 import { Fragment } from "react";
 import { BrowserRouter,Route,Redirect} from "react-router-dom";
 import './App.css'
@@ -23,6 +24,7 @@ function App() {
 		 	<Route path="/Home" ><Home/></Route>
        <Route  path="/acceuil" ><NumberInput/></Route>
        <Route  path="/Historique" ><Historique/></Route>
+       <Route  path="/Statistique" ><ExpenseStatistics/></Route>
        <Route path="/AjoutDepense" ><AjoutDepense/></Route>
        <Route path="/Contact" ><Contact/></Route>
        {user && <Route path="/" ><Login/></Route>} 

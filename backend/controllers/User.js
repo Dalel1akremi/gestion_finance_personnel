@@ -81,19 +81,29 @@ export const getRecentDepenses = async (req, res) => {
       return res.status(500).json({ msg: 'Error while fetching recent depenses' });
     }
   };
-export const Historique = async(req, res)  => {
+  export const Historique = async (req, res) => {
     try {
-        const Historique = await Depense.findAll({
-          order: [['id', 'DESC']],
-          limit:1000000000000000,
-        });
-    
-        res.json(Historique);
-      } catch (error) {
-        console.error(error);
-        return res.status(500).json({ msg: 'Error while fetching recent depenses' });
-      }
-    };
+      const startDate = req.query.startDate || '0000-00-00 00:00:00';
+      console.log(startDate) // Assuming you pass startDate and endDate as query parameters
+      const endDate = req.query.endDate || new Date();
+      console.log(ndDate) 
+      const Historique = await Depense.findAll({
+        order: [['id', 'DESC']],
+        limit: 1000000000000000,
+        where: {
+          Date: {
+            [db.Sequelize.Op.between]: [new Date(startDate), new Date(endDate)],
+          },
+        },
+      });
+  
+      res.json(Historique);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ msg: 'Error while fetching recent depenses' });
+    }
+  };
+  
 export const Email= async(req, res) => {
     const {name, email, message } = req.body;
   
@@ -123,13 +133,19 @@ export const Email= async(req, res) => {
         };
     export const Statistique = async (req, res) => {
         try {
+          var tempsEnMs = Date.now();
+          const startDate = req.query.startDate ?? '00-00-0000'; // Assuming you pass startDate and endDate as query parameters
+          const endDate = req.query.endDate ?? tempsEnMs ;
           // Group and sum the Montant by Categorie
           console.log("test:")
           const statistics = await Depense.findAll({
             attributes: ['Categorie', [db.fn('SUM', db.col('Montant')), 'Total']],
             group: ['Categorie'],
+            where: {
+              Date: {
+                [db.Sequelize.Op.between]: [startDate, endDate],},},
           });
-      
+         
           res.json(statistics);
         } catch (error) {
           console.error(error);

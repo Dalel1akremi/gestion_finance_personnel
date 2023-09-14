@@ -1,5 +1,5 @@
 import {  useState } from "react";
-import axios from "axios";
+
 import { SocialIcon } from 'react-social-icons'
 import './Singup.css';
 import'./Contact.css';
@@ -49,7 +49,7 @@ const Contact = () => {
         <li><a href="Statistique">Statistique</a></li>
         <li><a href="/Historique">Historique</a></li>
         <li><a href="/AjoutDepense">Ajout Depense</a></li>
-        <li><a href="/acceuil">Acceuil</a></li>
+        <li><a href="/Login">Acceuil</a></li>
         <li id="logo" ><a href="/login">Gestion de Finance Personnelle</a></li>
 			  </ul>
 			</nav>

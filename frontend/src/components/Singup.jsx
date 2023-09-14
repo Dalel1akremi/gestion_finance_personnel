@@ -33,12 +33,12 @@ const Signup = () => {
 		<header>
 			<nav>
 			  <ul>
-			  <li><a href="">Acceuil</a></li>
-				<li><a href="">Ajout Depense</a></li>
-				<li><a href="">Historique</a></li>
-				<li><a href="">Statistique</a></li>
+			  <li><a href="Acceuil">Acceuil</a></li>
+				<li><a href="AjoutDepense">Ajout Depense</a></li>
+				<li><a href="Historique">Historique</a></li>
+				<li><a href="Statistique">Statistique</a></li>
 				<li><a href="/Login">Se deconnecter</a></li>
-				<li id="logo" ><a href="">Gestion de Finance Personnelle</a></li>
+				<li id="logo" ><a href="/Login">Gestion de Finance Personnelle</a></li>
 			  </ul>
 			</nav>
 		  </header>

@@ -27,7 +27,7 @@ function App() {
        <Route  path="/Statistique" ><ExpenseStatistics/></Route>
        <Route path="/AjoutDepense" ><AjoutDepense/></Route>
        <Route path="/Contact" ><Contact/></Route>
-       {user && <Route path="/" ><Login/></Route>} 
+       {user && <Route path="/Login" ><Login/></Route>} 
 			{! user && <Route  exact path="/" > <Redirect  to="/Login" /></Route>}
       </BrowserRouter>
     </Fragment>

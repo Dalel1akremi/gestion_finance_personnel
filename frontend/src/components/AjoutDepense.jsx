@@ -40,7 +40,7 @@ const AjoutDepense = () => {
         <li><a href="/Historique">Historique</a></li>
         <li><a href="/AjoutDepense">Ajout Depense</a></li>
         <li><a href="/acceuil">Acceuil</a></li>
-        <li id="logo" ><a href="/acceuil">Gestion de Finance Personnelle</a></li>
+        <li id="logo" ><a href="/Login">Gestion de Finance Personnelle</a></li>
 			  </ul>
 			</nav>
 		  </header>

@@ -83,10 +83,9 @@ export const getRecentDepenses = async (req, res) => {
   };
   export const Historique = async (req, res) => {
     try {
-      const startDate = req.query.startDate || '0000-00-00 00:00:00';
-      console.log(startDate) // Assuming you pass startDate and endDate as query parameters
+      const startDate = req.query.startDate || '00-00-0000'; // Assuming you pass startDate and endDate as query parameters
       const endDate = req.query.endDate || new Date();
-      console.log(ndDate) 
+  
       const Historique = await Depense.findAll({
         order: [['id', 'DESC']],
         limit: 1000000000000000,

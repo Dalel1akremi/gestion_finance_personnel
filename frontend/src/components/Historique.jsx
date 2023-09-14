@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Historique.css';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
 function Historique() {
   const [number, setNumber] = useState('');
   const [displayedNumber, setDisplayedNumber] = useState(null);

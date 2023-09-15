@@ -47,8 +47,8 @@ COMMIT;
 
   CREATE TABLE depenses(
    id_dep varchar(50),
-   id_user int(11) unique,
-   id_cat int(11) unique,
+   id_user int(11) ,
+   id_cat int(11) ,
    Montant DOUBLE NOT NULL,
    Date date NOT NULL,
    Description VARCHAR(500) NOT NULL,
@@ -67,7 +67,7 @@ COMMIT;
 
 CREATE TABLE revenues(
    id_rev VARCHAR(50),
-   id_user  VARCHAR(50) unique,
+   id_user int(11),
    Montant DOUBLE NOT NULL,
    Date date NOT NULL,
    Description VARCHAR(500) NOT NULL,

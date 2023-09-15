@@ -5,15 +5,12 @@ import Categories from '../models/Categories.js';
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
-<<<<<<< HEAD
 import {Sequelize} from "sequelize";
 const db = new Sequelize('authentification','root','',{
   host: "localhost",
   dialect: "mysql"
 });
-=======
 
->>>>>>> origin/abir3
 export const Register = async(req, res) => {
     const {  firstName,lastName,email,password } = req.body;
     const salt = await bcrypt.genSalt();
@@ -103,12 +100,11 @@ export const getRecentDepenses = async (req, res) => {
   };
   export const Historique = async (req, res) => {
     try {
-<<<<<<< HEAD
       const startDate = req.query.startDate || '00-00-0000'; // Assuming you pass startDate and endDate as query parameters
       const endDate = req.query.endDate || new Date();
   
       const Historique = await Depense.findAll({
-        order: [['id', 'DESC']],
+        order: [['id_dep', 'DESC']],
         limit: 1000000000000000,
         where: {
           Date: {
@@ -172,18 +168,7 @@ export const Email= async(req, res) => {
           return res.status(500).json({ msg: 'Error while fetching statistics' });
         }
       };
-=======
-        const Historique = await Depense.findAll({
-          order: [['id', 'DESC']],
-          limit:1000000000000000,
-        });
-    
-        res.json(Historique);
-      } catch (error) {
-        console.error(error);
-        return res.status(500).json({ msg: 'Error while fetching recent depenses' });
-      }
-    };
+      
 
     export const getCategories = async (req, res) => {
         try {
@@ -264,4 +249,3 @@ export const Email= async(req, res) => {
 
 
    
->>>>>>> origin/abir3

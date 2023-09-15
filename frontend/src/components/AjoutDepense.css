@@ -30,7 +30,7 @@ ul {
 	text-align: center;
 	padding: 18px 16px;
   }
-  #logo {
+  .logo {
 	
 	font-weight:bold;
 	float: left;
@@ -53,4 +53,7 @@ ul {
 	text-decoration: underline;
 	color: white;
   }
-  
+  h2{
+	color: brown;
+	margin-top: 5%;
+  }

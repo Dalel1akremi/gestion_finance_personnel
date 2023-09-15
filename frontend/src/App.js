@@ -9,7 +9,7 @@ import Historique from "./components/Historique";
 import ExpenseStatistics from "./components/Statistique";
 import Settings from "./components/Settings";
 import { Fragment } from "react";
-import { BrowserRouter,Route,Redirect} from "react-router-dom";
+import { BrowserRouter,Route,Redirect, Switch } from "react-router-dom";
 import './App.css'
 
 
@@ -17,25 +17,25 @@ import './App.css'
 
 function App() {
 	const user = localStorage.getItem("token");
+  console.log(user);
 	return (
-    
-    <Fragment>
-      <BrowserRouter>
-      
-      <Route  path="/signup" ><Signup/></Route>
-		 	<Route path="/Home" ><Home/></Route>
-       <Route  path="/acceuil" ><NumberInput/></Route>
-       <Route  path="/Historique" ><Historique/></Route>
-       <Route  path="/Statistique" ><ExpenseStatistics/></Route>
-       <Route path="/AjoutDepense" ><AjoutDepense/></Route>
-       <Route path="/Contact" ><Contact/></Route>
-       <Route path="/Settings" ><Settings/></Route>
-       {user && <Route path="/Login" ><Login/></Route>} 
-			{! user && <Route  exact path="/" > <Redirect  to="/Login" /></Route>}
-      
   
-      </BrowserRouter>
-    </Fragment>
+    <Fragment>
+       <BrowserRouter>
+      <Switch>
+        <Route path="/signup" component={Signup} />
+        <Route path="/Home" component={Home} />
+        <Route path="/Login" component={Login} />
+        <Route exact path="/acceuil"  render={() => (user ? <NumberInput /> :<Redirect to="/Login" />  )} />
+        <Route path="/Historique" render={() => (user ? <Historique /> : <Redirect to="/Login" />)}/>
+        <Route path="/Statistique" component={user ? ExpenseStatistics : () => <Redirect to="/Login" />} />
+        <Route path="/AjoutDepense" component={user ? AjoutDepense : () => <Redirect to="/Login" />} />
+        <Route  path="/Contact" component={user ? Contact : () => <Redirect to="/Login" />} />
+        <Route path="/Settings" component={user ? Settings : () => <Redirect to="/Login" />} />
+        <Route exact path="/" component={user ? Login: () => <Redirect to="/Login" />} />
+      </Switch>
+    </BrowserRouter>
+ </Fragment>
 
 	);
 }

@@ -42,7 +42,7 @@ function NumberInput() {
 			  <ul>
 				<li><a href="/Login">Deconnecter</a></li>
         <li><a href="">Contact</a></li>
-				<li><a href="">Historique</a></li>
+				<li><a href="/Historique">Historique</a></li>
 				<li id="logo" ><a href="">Gestion de Finance Personnelle</a></li>
 			  </ul>
 			</nav>

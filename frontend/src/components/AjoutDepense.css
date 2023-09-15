@@ -37,3 +37,20 @@ ul {
 	font-size:1.7em;
   }
 
+/* Success Message Styles */
+.success-message {
+	background-color: #4CAF50; 
+	color: white; 
+	padding: 10px; 
+	text-align: center; 
+	font-size: 16px; 
+	font-weight: bold; 
+	margin-top: -40px; 
+  }
+  
+  
+  .success-message a {
+	text-decoration: underline;
+	color: white;
+  }
+  

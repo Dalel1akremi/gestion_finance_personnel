@@ -44,8 +44,7 @@ const Contact = () => {
 		<div>
 <header>
 			<nav>
-			  <ul className="navbar"><li className="logo" ><a href="/Login">Gestion de Finance Personnelle</a></li>
-			  <li><a href="/acceuil">Acceuil</a></li>
+			<ul className="navbar"><li className="logo" >Gestion de Finance Personnelle</li>			  <li><a href="/acceuil">Acceuil</a></li>
 			  <li><a href="/AjoutDepense">Ajout Depense</a></li>
 			  <li><a href="/Historique">Historique</a></li>
 			  <li><a href="Statistique">Statistique</a></li>
@@ -83,7 +82,7 @@ const Contact = () => {
 			<div className="signup_form_container">
 				<div className="right">
 					<form className="form_container" onSubmit={handleSubmit}  >
-						<h1 id="h1">Contacter Nous</h1>
+						<h1>Contacter Nous</h1>
 
 			  <input type="text" 
 			  placeholder="votre nom"
@@ -93,7 +92,7 @@ const Contact = () => {
 			  className="input" />
 
 			  <input type="email"
-			  placeholder="Password" 
+			  placeholder="E-mail" 
 			  name="email" onChange={handleChange}
 			   required 
 			  className="input"/>
@@ -103,7 +102,7 @@ const Contact = () => {
 			   onChange={handleChange} required
 			  className="input" />
 			
-			<button type="submit" className="red_btn">Envoyer</button>
+			<button type="submit" className='btn btn-success'>Envoyer</button>
 			<SocialIcon url="https://mail.google.com"></SocialIcon>
 		  </form>
 		</div>

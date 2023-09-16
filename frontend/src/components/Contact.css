@@ -36,6 +36,8 @@ ul {
 	font-size:1.7em;
   }
   
-  #h1{
-    color:black;
-  }
+  h1{
+	color: red;
+	text-align: center;
+	font-weight: bold;
+}

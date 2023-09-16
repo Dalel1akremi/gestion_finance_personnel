@@ -1,8 +1,15 @@
 import { useState,useEffect } from "react";
 import axios from "axios";
-import { Link , useHistory} from "react-router-dom";
-import { Container, Form, Button } from 'react-bootstrap';
+
 import "./login.css";
+import {
+MDBContainer,
+MDBTabsContent,
+MDBBtn,
+MDBInput,
+MDBCheckbox
+}
+from 'mdb-react-ui-kit';
 
 
 const Login = () => {
@@ -38,7 +45,7 @@ const Login = () => {
 		<div  >
 				<header>
 			<nav>
-			  <ul className="navbar"><li className="logo" ><a href="/Login">Gestion de Finance Personnelle</a></li>
+			  <ul className="navbar"><li className="logo" >Gestion de Finance Personnelle</li>
 			  <li><a href="/acceuil">Acceuil</a></li>
 			  <li><a href="/AjoutDepense">Ajout Depense</a></li>
 			  <li><a href="/Historique">Historique</a></li>
@@ -71,53 +78,37 @@ const Login = () => {
 			 </ul>
 			</nav>
 		  </header>
-
-		  <h5 id="abir">Bienvenue sur notre site web dédié au suivi des dépenses <br></br>personnelles, votre outil essentiel pour mieux gérer votre <br></br>argent.<br></br> Suivez vos dépenses, prenez le contrôle de vos finances et<br></br> atteignez vos objectifs financiers.<br></br> Explorez nos fonctionnalités dès maintenant.</h5>
-			
-		  <div className="login_container"></div>
+		  <h5 id="abir">Bienvenue sur notre site web dédié au suivi des dépenses <br></br>personnelles, votre outil essentiel pour mieux gérer votre <br></br>argent.<br></br> Suivez vos dépenses, prenez le contrôle de vos finances et<br></br> atteignez vos objectifs financiers.<br></br> Explorez nos fonctionnalités dès maintenant.</h5>	
+		  <div className="login_container ">
+		
 		 
-			<div className="login_form_container">
-				<div className="right">
-					<form  onSubmit={Auth}  className="form_container" >
-
-						<h1 id="a">Se connecter</h1>
-						<input
-							type="email"
-							placeholder="Email"
-							name="email"
-							value={email} 
+		<form  className="login" onSubmit={Auth}  >
+        <h1>Se connecter</h1>
+		 <MDBInput  value={email} 
 							onChange={(e) => setEmail(e.target.value)}
-							required
+							requiredlabel='Email address' id='form1' type='email'
 							className="input"
-						/>
-						<input
-							type="password"
-							placeholder="Password"
-							name="password"
-							value={password} 
+							placeholder="Email"/>
+          <MDBInput  value={password} 
 							onChange={(e) => setPassword(e.target.value)}
-							required
+							requiredlabel='Password' id='form2'
 							className="input"
-						/>
-						{msg && <div className="error_msg">{msg}</div>}
-						<a href="/acceuil">
-						<button type="submit" className="red_btn" >
-							Se connecter
-						</button>
-						</a>
-					</form>
-				</div>
-				<div className="left ">
-					<h1>Créer un nouveau compte</h1>
-					<a href="/signup">
-						<button type="button" className="white_btn" >
-						S'inscrire
-						</button>
-					</a>
-				</div>
-			</div>
-		</div>
-	);
+							placeholder="Mot de passe" type='password'/>
+
+          <div className="d-flex justify-content-between mx-4 mb-4">
+            <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Mémoriser-le ' />
+            <a href="!#">Mot de passe oublié</a>
+          </div>
+          {msg && <div className="error_msg">{msg}</div>}
+          <a href="/acceuil"><MDBBtn className="mb-4 w-100">Se connecter</MDBBtn></a>
+          <p> Vous n’êtes pas membre?<a href="/Signup" class="text-primary">S’inscrire</a></p>
+
+     </form>
+	</div>
+	</div>				
+		
+	)		
 };
+
 
 export default Login;

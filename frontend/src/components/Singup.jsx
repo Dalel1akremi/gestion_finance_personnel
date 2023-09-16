@@ -1,7 +1,19 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link} from "react-router-dom";
-import './Singup.css';
+import "./Registre.css";
+import {
+	MDBContainer,
+	MDBTabs,
+	MDBTabsItem,
+	MDBTabsLink,
+	MDBTabsContent,
+	MDBTabsPane,
+	MDBBtn,
+	MDBIcon,
+	MDBInput,
+	MDBCheckbox
+}
+from 'mdb-react-ui-kit';
 
 
 const Signup = () => {
@@ -32,8 +44,7 @@ const Signup = () => {
 		<div>
 	<header>
 			<nav>
-			  <ul className="navbar"><li className="logo" ><a href="/Login">Gestion de Finance Personnelle</a></li>
-			  <li><a href="/acceuil">Acceuil</a></li>
+			<ul className="navbar"><li className="logo" >Gestion de Finance Personnelle</li>			  <li><a href="/acceuil">Acceuil</a></li>
 			  <li><a href="/AjoutDepense">Ajout Depense</a></li>
 			  <li><a href="/Historique">Historique</a></li>
 			  <li><a href="Statistique">Statistique</a></li>
@@ -65,63 +76,35 @@ const Signup = () => {
 			 </ul>
 			</nav>
 		  </header>
+		  <div className="Registre_container">
+		  <form  className="Registre" onSubmit={Register}  >
+          <h1>S’inscrire</h1>
+          <MDBInput  placeholder='Nom' id='form1' type='text'
+		  value={firstName} onChange={(e) => setFirstName(e.target.value)} 
+		  required
+		  className="input"/>
+          <MDBInput placeholder='Prenom' id='form1' type='text'
+		  value={lastName} onChange={(e) => setLastName(e.target.value)} 
+		  required
+		  className="input"/>
+          <MDBInput  placeholder='Email' id='form1' type='email'
+		  value={email} onChange={(e) => setEmail(e.target.value)} 
+		  required
+		  className="input"/>
+          <MDBInput  placeholder='Password' id='form1' type='password'
+		  value={password} onChange={(e) => setPassword(e.target.value)} 
+		  required
+		  className="input"/>
+          <div className='d-flex justify-content-center mb-4'>
+            <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
+            </div>
+         <a href="/Login" ><MDBBtn className="mb-4 w-100">S’inscrire</MDBBtn></a>
+		</form>
+		
+  </div>
+ </div>
+	);}
 
-
-		<div className="signup_container">
-			<div className="signup_form_container">
-				<div className="left">
-					<h1>Welcome Back</h1>
-					<a href="/login">
-						<button type="button" className="white_btn">
-							Sing in
-						</button>
-					</a>
-				</div>
-				<div className="right">
-					<form className="form_container" onSubmit={Register}  >
-						<h1>Create Account</h1>
-						<input
-							type="text"
-							placeholder="First Name"
-							name="firstName"
-							value={firstName} onChange={(e) => setFirstName(e.target.value)} 
-							required
-							className="input"
-						/>
-						<input
-							type="text"
-							placeholder="Last Name"
-							name="lastName"
-							value={lastName} onChange={(e) => setLastName(e.target.value)} 
-							required
-							className="input"
-						/>
-						<input
-							type="email"
-							placeholder="Email"
-							name="email"
-							value={email} onChange={(e) => setEmail(e.target.value)}
-							required
-							className="input"
-						/>
-						<input
-							type="password"
-							placeholder="Password"
-							name="password"
-							value={password} onChange={(e) => setPassword(e.target.value)}
-							required
-							className="input"
-						/>
-						{/* {error && <div className="error_msg">{error}</div>} */}
-						<button type="submit" className="green_btn">
-							Sing Up
-						</button>
-					</form>
-				</div>
-			</div>
-		</div>
-		</div>
-	);
-};
-
+		
+		
 export default Signup;

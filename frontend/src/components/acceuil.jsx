@@ -40,8 +40,7 @@ function NumberInput() {
     
     <header>
 			<nav>
-			  <ul className="navbar"><li className="logo" ><a href="/Login">Gestion de Finance Personnelle</a></li>
-			  <li><a href="/acceuil">Acceuil</a></li>
+      <ul className="navbar"><li className="logo" >Gestion de Finance Personnelle</li>			  <li><a href="/acceuil">Acceuil</a></li>
 			  <li><a href="/AjoutDepense">Ajout Depense</a></li>
 			  <li><a href="/Historique">Historique</a></li>
 			  <li><a href="Statistique">Statistique</a></li>

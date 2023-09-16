@@ -51,6 +51,8 @@ nav {
 	text-align: right;
 	margin-bottom: 2%;
   }
-  h6{
-	margin-right: 23%;
-  }
+  h1{
+	color: red;
+	text-align: center;
+	font-weight: bold;
+}

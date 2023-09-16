@@ -66,8 +66,7 @@ const ExpenseStatistics = () => {
     <div>
       <header>
 			<nav>
-			  <ul className="navbar"><li className="logo" ><a href="/Login">Gestion de Finance Personnelle</a></li>
-			  <li><a href="/acceuil">Acceuil</a></li>
+      <ul className="navbar"><li className="logo" >Gestion de Finance Personnelle</li>			  <li><a href="/acceuil">Acceuil</a></li>
 			  <li><a href="/AjoutDepense">Ajout Depense</a></li>
 			  <li><a href="/Historique">Historique</a></li>
 			  <li><a href="Statistique">Statistique</a></li>
@@ -102,7 +101,7 @@ const ExpenseStatistics = () => {
 
       <div className="statistic_container">
         <div className="graphic">
-          <h1 id='hcouleur'>Statistique des depenses </h1>
+          <h1 >Statistique des depenses </h1>
           {/* Date picker for start date */}
           <div className='date-filters'>
          <h6>Plage de date:</h6> 

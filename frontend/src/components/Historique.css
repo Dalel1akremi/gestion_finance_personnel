@@ -10,13 +10,15 @@
 	justify-content: center;
 }
 .middle-section{
-	background-color: aliceblue;
+	background-color:white;
 	width: 90%;
 	height: 50%;
 	text-align: center;
 }
-#h{
-	color:brown;
+h2{
+	color: red;
+	text-align: center;
+	font-weight: bold;
 }
   /* ***************** NAVBAR ***************** */
   nav {

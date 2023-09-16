@@ -15,15 +15,17 @@
   
 
 
-h2{
-  margin-bottom: 5%;
-}
+  h2{
+    color: red;
+    text-align: center;
+    font-weight: bold;
+  }
 
 .section-container {
   margin-top: 10%;
   border: 1px solid #ccc;
   background-color: rgba(255, 255, 255, 0.9);
-padding: 5%;
+padding: 2%;
 width: 60%;
 
 }

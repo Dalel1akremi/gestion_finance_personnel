@@ -53,7 +53,8 @@ ul {
 	text-decoration: underline;
 	color: white;
   }
-  h2{
-	color: brown;
-	margin-top: 5%;
-  }
+  h1{
+	color: red;
+	text-align: center;
+	font-weight: bold;
+}

@@ -8,6 +8,7 @@ import AjoutDepense from "./components/AjoutDepense";
 import Historique from "./components/Historique";
 import ExpenseStatistics from "./components/Statistique";
 import Settings from "./components/Settings";
+import Reintialisation from"./components/Reintialisation";
 import { Fragment } from "react";
 import { BrowserRouter,Route,Redirect, Switch } from "react-router-dom";
 import './App.css'
@@ -17,7 +18,13 @@ import './App.css'
 
 function App() {
 	const user = localStorage.getItem("token");
-  console.log(user);
+  // Check if the token exists
+  if (user) {
+    console.log('Token retrieved from localStorage:', user);
+  } else {
+    console.log('No token found in localStorage.');
+  }
+
 	return (
   
     <Fragment>
@@ -31,6 +38,7 @@ function App() {
         <Route path="/Statistique" component={user ? ExpenseStatistics : () => <Redirect to="/Login" />} />
         <Route path="/AjoutDepense" component={user ? AjoutDepense : () => <Redirect to="/Login" />} />
         <Route  path="/Contact" component={user ? Contact : () => <Redirect to="/Login" />} />
+        <Route path='/Reintialisation'component={ Reintialisation }/>
         <Route path="/Settings" component={user ? Settings : () => <Redirect to="/Login" />} />
         <Route exact path="/" component={user ? Login: () => <Redirect to="/Login" />} />
       </Switch>

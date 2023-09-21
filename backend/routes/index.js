@@ -5,12 +5,12 @@ const router = express.Router();
 
 router.post('/Login', Login);
 router.post('/Register', Register);
-router.post('/AjoutDepense',AjoutDepense);
-router.get('/recentDepenses',getRecentDepenses)
-router.get('/Historique',Historique)
+router.post('/AjoutDepense', verifyToken, AjoutDepense);
+router.get('/recentDepenses', verifyToken,getRecentDepenses)
+router.get('/Historique', verifyToken,Historique)
 router.post('/Contact', Email)
 
-router.get('/statistics',Statistique)
+router.get('/statistics', verifyToken,Statistique)
 // if make private route verify token user before send response must call to verifyToken feature with the intial feature for this route
 router.get('/getCategories', getCategories) 
 router.post('/addCategory', addCategory) 

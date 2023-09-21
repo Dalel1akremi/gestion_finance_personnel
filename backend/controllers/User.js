@@ -45,7 +45,8 @@ export const Login = async(req, res) => {
         if(!match) return res.status(400).json({msg: "Wrong Password"});
         const userId = user[0].id;
         const email = user[0].email;
-        const token = jwt.sign({userId,email}, "process.env.ACCESS_TOKEN_SECRET", {
+        console.log("logged: ", process.env.ACCESS_TOKEN_SECRET)
+        const token = jwt.sign({userId,email}, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: "7d",
         });
         res.json({token});
@@ -56,7 +57,6 @@ export const Login = async(req, res) => {
 }
 export const AjoutDepense = async (req, res) => {
   const { Montant, Categorie, Date, Description } = req.body;
-
   try {
     const category = await Categories.findOne({
       where: { nom_cat: Categorie },
@@ -65,16 +65,17 @@ export const AjoutDepense = async (req, res) => {
     if (!category) {
       return res.status(400).json({ msg: "Category not found" });
     }
-
   
     const newExpense = await Depense.create({
+      
       Montant: Montant,
       Categorie: Categorie, 
       Date: Date,
       Description: Description,
       id_cat: category.id_cat, 
+      id: req.user.userId,
+  
     });
-
     res.json({ msg: "Ajouté avec succès", newExpense });
   } catch (error) {
     console.error("Error in AjoutDepense:", error);
@@ -90,8 +91,9 @@ export const getRecentDepenses = async (req, res) => {
         
         order: [['id','DESC']],
         limit: 1, 
+        id: req.user.userId,
       });
-  
+ 
       res.json(recentDepenses);
     } catch (error) {
       console.error(error);
@@ -102,14 +104,17 @@ export const getRecentDepenses = async (req, res) => {
     try {
       const startDate = req.query.startDate || '00-00-0000'; // Assuming you pass startDate and endDate as query parameters
       const endDate = req.query.endDate || new Date();
-  
+      
       const Historique = await Depense.findAll({
         order: [['id_dep', 'DESC']],
         limit: 1000000000000000,
+        
         where: {
           Date: {
             [db.Sequelize.Op.between]: [new Date(startDate), new Date(endDate)],
+            
           },
+          id: req.user.userId,
         },
       });
   
@@ -159,7 +164,8 @@ export const Email= async(req, res) => {
             group: ['Categorie'],
             where: {
               Date: {
-                [db.Sequelize.Op.between]: [startDate, endDate],},},
+                [db.Sequelize.Op.between]: [startDate, endDate],},
+                id: req.user.userId,},
           });
          
           res.json(statistics);

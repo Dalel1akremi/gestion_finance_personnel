@@ -17,7 +17,7 @@ import './App.css'
 
 function App() {
 	const user = localStorage.getItem("token");
-  console.log(user);
+ 
 	return (
   
     <Fragment>

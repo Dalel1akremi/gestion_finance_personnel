@@ -14,7 +14,11 @@ const AjoutDepense = () => {
 	useEffect(() => {
 		const fetchCategories = async () => {
 		  try {
-			const response = await axios.get('http://localhost:5000/getCategories');
+			const token=localStorage.getItem("token");
+			const response = await axios.get(('http://localhost:5000/getCategories'),{
+				headers: { "Authorization": `Bearer ${token}` }
+  
+			  });
 			setCategories(response.data); 
 		  } catch (error) {
 			console.error("Error fetching categories:", error);

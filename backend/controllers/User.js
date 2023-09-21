@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import Depense from "../models/Depense.js";
-import express from 'express';
+import crypto from 'crypto';
 import Categories from '../models/Categories.js';
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
@@ -247,11 +247,37 @@ export const Email= async(req, res) => {
         }
       };
       
+      export const reset_password= async (req, res) => {
+        const { email } = req.body;
+      const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'yakinebenali5@gmail.com', 
+        pass: 'offpdprxkhmnutjd'
+        },
+      });
+      function generateResetToken() {
+        return crypto.randomBytes(32).toString('hex');
+      }
+     
+        const resetToken = generateResetToken(); 
+        const resetLink = `http://localhost:3000/reset_password/${resetToken}`;
       
+        const mailOptions = {
+          from: 'yakinebenali5@gmail.com',
+          to: email,
+          subject: 'Réinitialisation de mot de passe',
+          text: `Cliquez sur le lien suivant pour réinitialiser votre mot de passe : ${resetLink}`,
+        };
       
-                  
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Une erreur est survenue lors de lenvoi de le-mail de réinitialisation de mot de passe' });
+          } else {
+            console.log('E-mail de réinitialisation de mot de passe envoyé : ' + info.response);
+            res.json({ message: 'E-mail de réinitialisation de mot de passe envoyé avec succès' });
+          }
+        });
+      };
       
-      
-
-
-   

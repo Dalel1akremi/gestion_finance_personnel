@@ -14,8 +14,13 @@ function Historique() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token=localStorage.getItem("token");
         const response = await axios.get('http://localhost:5000/Historique', {
           params: { startDate, endDate },
+         
+            headers: { "Authorization": `Bearer ${token}` }
+    
+        
         });
         setExpenses(response.data);
       } catch (error) {
@@ -24,7 +29,7 @@ function Historique() {
     };
 
     fetchData();
-  }, [startDate, endDate]);
+  }, []);
 
   const handleNumberChange = (e) => {
     const inputNumber = e.target.value;

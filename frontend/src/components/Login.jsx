@@ -3,8 +3,7 @@ import axios from "axios";
 
 import "./login.css";
 import {
-MDBContainer,
-MDBTabsContent,
+
 MDBBtn,
 MDBInput,
 MDBCheckbox
@@ -19,24 +18,28 @@ const Login = () => {
 
     const Auth = async (e) => {
         e.preventDefault();
-        try {
-		const { data: res } = await axios.post("http://localhost:5000/Login", {
+		axios.post("http://localhost:5000/Login", {
                 email: email,
                 password: password
-            });
-                   
-				localStorage.setItem("token",res.data);
-				 
-				window.location = "/acceuil";
-        } catch (error) {
-            if  (
-				error.response &&
-				error.response.status >= 400 &&
-				error.response.status <= 500
-			)  {
-                setMsg(error.response.data.msg);
-            }
-        }
+            }).then(({ data }) => {
+				const token = data.token
+
+				if(token) {
+					localStorage.setItem("token",token);
+					window.location = "/acceuil";
+				} else {
+					setMsg("User Not Found");
+				}
+			}).catch(error => {
+				if  (
+					error.response &&
+					error.response.status >= 400 &&
+					error.response.status <= 500
+				)  {
+					setMsg(error.response.data.msg);
+				}
+			})			
+    
     }
 
 

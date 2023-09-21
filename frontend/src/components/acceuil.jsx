@@ -15,8 +15,9 @@ function NumberInput() {
   }, []);
 
   useEffect(() => {
+    const token=localStorage.getItem("token");
     axios
-      .get('http://localhost:5000/recentDepenses')
+      .get('http://localhost:5000/recentDepenses',{headers: { "Authorization": `Bearer ${token}` }})
       .then((response) => {
         setExpenses(response.data);
       })

@@ -27,11 +27,13 @@ const ExpenseStatistics = () => {
     setLoading(true);
 
     try {
+      
+    const token=localStorage.getItem("token");
       const response = await axios.get('http://localhost:5000/statistics', {
         params: {
           startDate: startDate?.toISOString(),
           endDate: endDate?.toISOString(),
-        },
+        },headers: { "Authorization": `Bearer ${token}` }
       });
 
       const categories = response.data.map((entry) => entry.Categorie);
@@ -60,7 +62,7 @@ const ExpenseStatistics = () => {
 
   useEffect(() => {
     fetchData();
-  }, [startDate, endDate]);
+  }, []);
 
   return (
     <div>

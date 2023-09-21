@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-
-
 import './Singup.css';
 import './AjoutDepense.css';
 
@@ -22,6 +19,7 @@ const AjoutDepense = () => {
 		  } catch (error) {
 			console.error("Error fetching categories:", error);
 		  }
+
 		};
 		fetchCategories();
 	  }, []);
@@ -29,25 +27,46 @@ const AjoutDepense = () => {
 	  
 	  console.log("test", categories);
 	  
-
-	const Ajout = async (e) => {
+	  
+	  const Ajout = async (e) => {
 		e.preventDefault();
+		
 		try {
-			await axios.post('http://localhost:5000/AjoutDepense', {
-				Montant: Montant,
-				Categorie: Categorie,
-				Date: Date,
-				Description: Description,
-				
-			});
-			setSuccessMessage('Expense added successfully');
-			window.location = "/AjoutDepense";
-		} catch (error) {
-			if (error.response) {
-				setMsg(error.response.data.msg);
+		  
+		  const token=localStorage.getItem("token");
+		  
+		  const response = await axios.post(
+			"http://localhost:5000/AjoutDepense",
+			{
+			  Montant: Montant,
+			  Categorie: Categorie,
+			  Date: Date,
+			  Description: Description,
+			},
+			{
+			  headers: { "Authorization": `Bearer ${token}` }
+
 			}
+		  );
+	  
+		  // Check if the response indicates success (you can customize this based on your API)
+		  if (response.status === 200) {
+			setSuccessMessage('Expense added successfully');
+			
+			setFMontant('');
+	setCategorie('');
+	setDate('');
+	setDescription('');
+		  } else {
+			setMsg('Expense adding failed');
+		  }
+		} catch (error) {
+		  // Handle unexpected errors here
+		  console.error(error);
+		  setMsg('An unexpected error occurred');
 		}
-	}
+	  }
+	  
 
 	return (
 		<div>

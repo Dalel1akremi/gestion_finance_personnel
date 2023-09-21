@@ -1,19 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import "./Registre.css";
-import {
-	MDBContainer,
-	MDBTabs,
-	MDBTabsItem,
-	MDBTabsLink,
-	MDBTabsContent,
-	MDBTabsPane,
-	MDBBtn,
-	MDBIcon,
-	MDBInput,
-	MDBCheckbox
-}
-from 'mdb-react-ui-kit';
 
 
 const Signup = () => {
@@ -79,26 +66,26 @@ const Signup = () => {
 		  <div className="Registre_container">
 		  <form  className="Registre" onSubmit={Register}  >
           <h1>S’inscrire</h1>
-          <MDBInput  placeholder='Nom' id='form1' type='text'
+          <input  placeholder='Nom' type='text'
 		  value={firstName} onChange={(e) => setFirstName(e.target.value)} 
 		  required
 		  className="input"/>
-          <MDBInput placeholder='Prenom' id='form1' type='text'
+          <input placeholder='Prenom'  type='text'
 		  value={lastName} onChange={(e) => setLastName(e.target.value)} 
 		  required
 		  className="input"/>
-          <MDBInput  placeholder='Email' id='form1' type='email'
+          <input  placeholder='Email' type='email'
 		  value={email} onChange={(e) => setEmail(e.target.value)} 
 		  required
 		  className="input"/>
-          <MDBInput  placeholder='Password' id='form1' type='password'
+          <input  placeholder='Password' type='password'
 		  value={password} onChange={(e) => setPassword(e.target.value)} 
 		  required
 		  className="input"/>
           <div className='d-flex justify-content-center mb-4'>
-            <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
+          
             </div>
-         <a href="/Login" ><MDBBtn className="mb-4 w-100">S’inscrire</MDBBtn></a>
+         <a href="/Login" ><button className="center">S’inscrire</button></a>
 		</form>
 		
   </div>

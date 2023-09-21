@@ -1,44 +1,49 @@
-import { useState,useEffect } from "react";
+import { useState,useEffect} from "react";
 import axios from "axios";
-
 import "./login.css";
-import {
-MDBContainer,
-MDBTabsContent,
-MDBBtn,
-MDBInput,
-MDBCheckbox
-}
-from 'mdb-react-ui-kit';
 
 
 const Login = () => {
 	const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
+	const [token, setToken] = useState('');
 
-    const Auth = async (e) => {
-        e.preventDefault();
-        try {
-		const { data: res } = await axios.post("http://localhost:5000/Login", {
-                email: email,
-                password: password
-            });
-                   
-				localStorage.setItem("token",res.data);
-				 
+		useEffect(() => {
+			const storedToken = localStorage.getItem('token');
+			if (storedToken !== null && storedToken !== undefined) {
+			  setToken(storedToken);
+			  console.log('Token retrieved from localStorage:', storedToken);
+			}
+		
+		  }
+		  , []);
+		  const Auth = async (e) => {
+			e.preventDefault();
+			try {
+				const { data: res } = await axios.post("http://localhost:5000/Login", {
+					email: email,
+					password: password
+				});
+		
+				console.log('Token received from server:', res.data);
+		
+				localStorage.setItem("token", res.data);
+				console.log('Token stored in localStorage:', res.data);
+		
+				setToken(res.data);
+		
 				window.location = "/acceuil";
-        } catch (error) {
-            if  (
-				error.response &&
-				error.response.status >= 400 &&
-				error.response.status <= 500
-			)  {
-                setMsg(error.response.data.msg);
-            }
-        }
-    }
-
+			} catch (error) {
+				if (
+					error.response &&
+					error.response.status >= 400 &&
+					error.response.status <= 500
+				) {
+					setMsg(error.response.data.msg);
+				}
+			}
+		}
 
 	return (
 		
@@ -84,24 +89,25 @@ const Login = () => {
 		 
 		<form  className="login" onSubmit={Auth}  >
         <h1>Se connecter</h1>
-		 <MDBInput  value={email} 
+		 <input  value={email} 
 							onChange={(e) => setEmail(e.target.value)}
 							requiredlabel='Email address' id='form1' type='email'
 							className="input"
 							placeholder="Email"/>
-          <MDBInput  value={password} 
+          <input  value={password} 
 							onChange={(e) => setPassword(e.target.value)}
 							requiredlabel='Password' id='form2'
 							className="input"
 							placeholder="Mot de passe" type='password'/>
 
-          <div className="d-flex justify-content-between mx-4 mb-4">
-            <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Mémoriser-le ' />
-            <a href="!#">Mot de passe oublié</a>
+<div className="d-flex justify-content-between mx-3 mb-4">
+       
+		  <a href="/Reintialisation"  class="text-primary">Mot de passe oubliee?</a>
+           
           </div>
           {msg && <div className="error_msg">{msg}</div>}
-          <a href="/acceuil"><MDBBtn className="mb-4 w-100">Se connecter</MDBBtn></a>
-          <p> Vous n’êtes pas membre?<a href="/Signup" class="text-primary">S’inscrire</a></p>
+          <a href="/acceuil" ><button className="centerr">Se connecter</button></a>
+          <p> Vous n’êtes pas membre?<a href="/Signup" className="text-primary">S’inscrire</a></p>
 
      </form>
 	</div>

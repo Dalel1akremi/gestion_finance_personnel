@@ -82,3 +82,19 @@ ul {
     font-weight: bold;
     margin-top: 20px; }
 
+	.centerr {
+		margin: 0;
+		position: absolute;
+		top: 65%;
+		left: 75%;
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	  }
+	  button {
+		color: white;
+		padding: 10px;
+		font-size: 23px;
+		background: rgb(0, 85, 255);
+		border-color:  rgb(0, 85, 255);
+        border-radius: 10px;
+	  }

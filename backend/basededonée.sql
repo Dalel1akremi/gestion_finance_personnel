@@ -7,21 +7,21 @@ SET time_zone = "+00:00";
 
 
 CREATE TABLE Users(
-   id_user VARCHAR(50),
+   id int(11),
    firstName VARCHAR(50) ,
    lastName VARCHAR(50) ,
    email VARCHAR(50) unique,
    password VARCHAR(255),
    createdAt DATETIME NOT NULL,
    updatedAt DATETIME NOT NULL,
-   PRIMARY KEY(id_user)
+   PRIMARY KEY(id,email)
 );
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `Users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id_user` NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 
@@ -47,14 +47,15 @@ COMMIT;
 
   CREATE TABLE depenses(
    id_dep varchar(50),
-   id_user int(11) ,
+   id int(11) ,
    id_cat int(11) ,
    Montant DOUBLE NOT NULL,
+   Categorie varchar(50),
    Date date NOT NULL,
    Description VARCHAR(500) NOT NULL,
    createdAt DATETIME NOT NULL,
    updatedAt DATETIME NOT NULL,
-   FOREIGN KEY (id_user) REFERENCES Users(id_user),
+   FOREIGN KEY (id) REFERENCES Users(id),
     FOREIGN KEY (id_cat) REFERENCES categories(id_cat),
    PRIMARY KEY(id_dep)
 );
@@ -67,7 +68,7 @@ COMMIT;
 
 CREATE TABLE revenues(
    id_rev VARCHAR(50),
-   id_user int(11),
+   email int(11),
    Montant DOUBLE NOT NULL,
    Date date NOT NULL,
    Description VARCHAR(500) NOT NULL,

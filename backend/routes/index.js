@@ -12,9 +12,9 @@ router.post('/Contact', Email)
 
 router.get('/statistics', verifyToken,Statistique)
 // if make private route verify token user before send response must call to verifyToken feature with the intial feature for this route
-router.get('/getCategories', getCategories) 
-router.post('/addCategory', addCategory) 
-router.put('/editCategory', editCategory) 
-router.delete('/deleteCategory', deleteCategory)
+router.get('/getCategories', verifyToken, getCategories) 
+router.post('/addCategory', verifyToken, addCategory) 
+router.put('/editCategory', verifyToken, editCategory) 
+router.delete('/deleteCategory', verifyToken, deleteCategory)
 
 export default router;

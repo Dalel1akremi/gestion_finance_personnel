@@ -12,6 +12,14 @@ const Categories = sequelize.define('categories', {
     allowNull: false,
     unique: true,
   },
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'User', 
+      key: 'id',       
+    },
+  },
 });
 
 export default Categories;

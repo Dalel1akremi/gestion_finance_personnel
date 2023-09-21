@@ -180,7 +180,9 @@ export const Email= async(req, res) => {
         try {
           const categories = await Categories.findAll({
             attributes: ['nom_cat'], 
-          
+            where: {
+               
+                id: req.user.userId, },
           });
       
          
@@ -199,6 +201,7 @@ export const Email= async(req, res) => {
         try {
           const newCategory = await Categories.create({
             nom_cat: name,
+            id: req.user.userId,
           });
       
           res.json({ msg: "Category added successfully", newCategory });
@@ -211,7 +214,9 @@ export const Email= async(req, res) => {
         const { name, newName } = req.body;
       
         try {
-          const category = await Categories.findOne({ where: { nom_cat: name } });
+          const category = await Categories.findOne({ where: { nom_cat: name } ,
+            id: req.user.userId,
+          });
       
           if (!category) {
             return res.status(404).json({ msg: "Category not found" });
@@ -232,7 +237,7 @@ export const Email= async(req, res) => {
         const { name } = req.body;
       
         try {
-          const category = await Categories.findOne({ where: { nom_cat: name } });
+          const category = await Categories.findOne({ where: { nom_cat: name } ,id: req.user.userId,});
       
           if (!category) {
             return res.status(404).json({ msg: "Category not found" });

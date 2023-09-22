@@ -61,17 +61,19 @@ ALTER TABLE `depenses`
   MODIFY `id_dep` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
-CREATE TABLE revenues (
-   id_rev INT(11) NOT NULL AUTO_INCREMENT,
-   email INT(11),
+
+
+CREATE TABLE revenues(
+   id_rev VARCHAR(50),
+   id int(11),
    Montant DOUBLE NOT NULL,
    Date DATE NOT NULL,
    Description VARCHAR(500) NOT NULL,
    id INT(11),
    createdAt DATETIME NOT NULL,
    updatedAt DATETIME NOT NULL,
-   PRIMARY KEY (id_rev),
-   FOREIGN KEY (id) REFERENCES Users (id)
+   FOREIGN KEY (id)REFERENCES Users(id) ,
+   PRIMARY KEY(id_rev)
 );
 
 -- AUTO_INCREMENT for table `revenues`

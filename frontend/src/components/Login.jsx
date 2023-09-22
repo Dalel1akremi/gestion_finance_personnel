@@ -1,14 +1,6 @@
-import { useState,useEffect } from "react";
+import { useState,useEffect} from "react";
 import axios from "axios";
-
 import "./login.css";
-import {
-
-MDBBtn,
-MDBInput,
-MDBCheckbox
-}
-from 'mdb-react-ui-kit';
 
 
 const Login = () => {
@@ -41,7 +33,6 @@ const Login = () => {
 			})			
     
     }
-
 
 	return (
 		
@@ -87,24 +78,25 @@ const Login = () => {
 		 
 		<form  className="login" onSubmit={Auth}  >
         <h1>Se connecter</h1>
-		 <MDBInput  value={email} 
+		 <input  value={email} 
 							onChange={(e) => setEmail(e.target.value)}
 							requiredlabel='Email address' id='form1' type='email'
 							className="input"
 							placeholder="Email"/>
-          <MDBInput  value={password} 
+          <input  value={password} 
 							onChange={(e) => setPassword(e.target.value)}
 							requiredlabel='Password' id='form2'
 							className="input"
 							placeholder="Mot de passe" type='password'/>
 
-          <div className="d-flex justify-content-between mx-4 mb-4">
-            <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Mémoriser-le ' />
-            <a href="!#">Mot de passe oublié</a>
+<div className="d-flex justify-content-between mx-3 mb-4">
+       
+		  <a href="/Reintialisation"  class="text-primary">Mot de passe oubliee?</a>
+           
           </div>
           {msg && <div className="error_msg">{msg}</div>}
-          <a href="/acceuil"><MDBBtn className="mb-4 w-100">Se connecter</MDBBtn></a>
-          <p> Vous n’êtes pas membre?<a href="/Signup" class="text-primary">S’inscrire</a></p>
+          <a href="/acceuil" ><button className="centerr">Se connecter</button></a>
+          <p> Vous n’êtes pas membre?<a href="/Signup" className="text-primary">S’inscrire</a></p>
 
      </form>
 	</div>

@@ -1,34 +1,25 @@
-import { useState } from "react";
-import axios from "axios";
+// ResetPasswordForm.js
+import React, { useState } from 'react';
+import axios from 'axios';
 import "./Registre.css";
+const Reintialisation = () => {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const Signup = () => {
-	const [firstName,setFirstName] = useState('');
-	const [lastName,setLastName] = useState('');
-	const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [msg, setMsg] = useState('');
-	const Register= async (e) => {
-        e.preventDefault();
-        try {
-            await axios.post('http://localhost:5000/Register', {
-                firstName:firstName,
-				lastName:lastName,
-                email: email,
-                password: password
-            });
-            window.location = "/login";
-        } catch (error) {
-            if (error.response) {
-                setMsg(error.response.data.msg);
-            }
-        }
+    try {
+      const response = await axios.post('http://localhost:5000/reset_password', { email });
+      setMessage(response.data.message);
+    } catch (error) {
+      console.error(error.response.data);
+      setMessage('Une erreur est survenue lors de la réinitialisation du mot de passe.');
     }
+  };
 
-
-	return (
-		<div>
+  return (
+    <div>
 	<header>
 			<nav>
 			<ul className="navbar"><li className="logo" >Gestion de Finance Personnelle</li>			  <li><a href="/acceuil">Acceuil</a></li>
@@ -64,34 +55,25 @@ const Signup = () => {
 			</nav>
 		  </header>
 		  <div className="Registre_container">
-		  <form  className="Registre" onSubmit={Register}  >
-          <h1>S’inscrire</h1>
-          <input  placeholder='Nom' type='text'
-		  value={firstName} onChange={(e) => setFirstName(e.target.value)} 
-		  required
-		  className="input"/>
-          <input placeholder='Prenom'  type='text'
-		  value={lastName} onChange={(e) => setLastName(e.target.value)} 
-		  required
-		  className="input"/>
-          <input  placeholder='Email' type='email'
-		  value={email} onChange={(e) => setEmail(e.target.value)} 
-		  required
-		  className="input"/>
-          <input  placeholder='Password' type='password'
-		  value={password} onChange={(e) => setPassword(e.target.value)} 
-		  required
-		  className="input"/>
-          <div className='d-flex justify-content-center mb-4'>
-          
-            </div>
-         <a href="/Login" ><button className="center">S’inscrire</button></a>
-		</form>
-		
-  </div>
- </div>
-	);}
+          <div  className="Registre"   >
+      <h2>Réinitialisation du mot de passe</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Adresse e-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className='input'
+        />
+        <div>
+        <button type="submit">Envoyer</button></div>
+       
+      </form>
+      <p>{message}</p>
+    </div>
+    </div>
+    </div>
+  );
+};
 
-		
-		
-export default Signup;
+export default Reintialisation;

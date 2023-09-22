@@ -68,13 +68,13 @@ COMMIT;
 
 CREATE TABLE revenues(
    id_rev VARCHAR(50),
-   email int(11),
+   id int(11),
    Montant DOUBLE NOT NULL,
    Date date NOT NULL,
    Description VARCHAR(500) NOT NULL,
    createdAt DATETIME NOT NULL,
    updatedAt DATETIME NOT NULL,
-   FOREIGN KEY (id_user)REFERENCES Users(id_user) ,
+   FOREIGN KEY (id)REFERENCES Users(id) ,
    PRIMARY KEY(id_rev)
 );
 

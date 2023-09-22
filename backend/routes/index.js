@@ -1,5 +1,5 @@
 import express from "express";
-import {Login,Register,AjoutDepense,getRecentDepenses, Historique, Email, Statistique,getCategories,addCategory,editCategory,deleteCategory,reset_password} from "../controllers/User.js"
+import {Login,Register,AjoutDepense,getRecentDepenses, Historique, Email, Statistique,getCategories,addCategory,editCategory,deleteCategory,reset_password,changePassword} from "../controllers/User.js"
 import { verifyToken } from "../middelware/VerifyToken.js";
 const router = express.Router();
 
@@ -17,5 +17,6 @@ router.post('/addCategory', verifyToken, addCategory)
 router.put('/editCategory', verifyToken, editCategory) 
 router.delete('/deleteCategory', verifyToken, deleteCategory)
 router.post('/reset_password',reset_password)
+router.post('/changePassword', verifyToken,changePassword)
 
 export default router;

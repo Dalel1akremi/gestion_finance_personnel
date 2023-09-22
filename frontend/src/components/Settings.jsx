@@ -7,6 +7,10 @@ function Settings() {
   const [newCategory, setNewCategory] = useState(''); 
   const [loading, setLoading] = useState(true);
   const [categoryNames, setCategoryNames] = useState([]); 
+  const [oldPassword, setOldPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [passwordChangeSuccess, setPasswordChangeSuccess] = useState(false);
 
   useEffect(() => {
     const token=localStorage.getItem("token");
@@ -90,7 +94,39 @@ function Settings() {
     }
   };
   
-
+  const changePassword = () => {
+    if (oldPassword.trim() === '' || newPassword.trim() === '') {
+      setPasswordError('Veuillez remplir tous les champs.');
+      return;
+    }
+  
+    const token = localStorage.getItem('token');
+    axios
+      .post(
+        'http://localhost:5000/changePassword',
+        { oldPassword, newPassword },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((response) => {
+        // Handle success
+        console.log('Password changed successfully:', response.data);
+        setOldPassword('');
+        setNewPassword('');
+        setPasswordError('');
+        setPasswordChangeSuccess(true); // Set passwordChangeSuccess to true
+      })
+      .catch((error) => {
+        // Handle error
+        if (error.response && error.response.status === 401) {
+          setPasswordError('Ancien mot de passe incorrect.');
+        } else {
+          console.error('Error changing password:', error);
+          setPasswordError('Erreur lors du changement de mot de passe.');
+        }
+      });
+  };
 
 
   return (
@@ -180,9 +216,36 @@ function Settings() {
           Ajouter une catégorie
         </button>
       </div>
+      <div className="section-container">
+  <h2>Changer Mot de passe</h2>
+  <input
+    type="password"
+    id="oldPassword"
+    placeholder="Ancien mot de passe"
+    value={oldPassword}
+    onChange={(e) => setOldPassword(e.target.value)}
+    className="input-field"
+  />
+  <input
+    type="password"
+    id="newPassword"
+    placeholder="Nouveau mot de passe"
+    value={newPassword}
+    onChange={(e) => setNewPassword(e.target.value)}
+    className="input-field"
+  />
+  {passwordError && <p className="error-message">{passwordError}</p>}
+  <button onClick={changePassword} className="btn btn-primary">
+    Changer Mot de passe
+  </button>
+  {passwordChangeSuccess && (
+        <p className="success-message">Mot de passe modifié avec succès</p>
+      )}
+</div>
 
-    
+
     </div>
+   
     </div>
   );
 }

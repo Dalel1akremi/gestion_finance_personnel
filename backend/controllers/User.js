@@ -286,3 +286,36 @@ export const Email= async(req, res) => {
         });
       };
       
+      export const changePassword = async (req, res) => {
+        try {
+          const { oldPassword, newPassword } = req.body;
+          const userId = req.user.userId; 
+      
+          // Find the user by their user ID
+          const user = await User.findByPk(userId);
+      
+          if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+          }
+      
+          // Compare the old password with the stored hashed password
+          const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+      
+          if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Old password is incorrect' });
+          }
+      
+          // Hash the new password and update it in the database
+          const salt = await bcrypt.genSalt();
+          const hashPassword = await bcrypt.hash(newPassword, salt);
+          user.password = hashPassword;
+      
+          await user.save();
+      
+          res.json({ message: 'Password changed successfully' });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Error changing password' });
+        }
+      };
+      

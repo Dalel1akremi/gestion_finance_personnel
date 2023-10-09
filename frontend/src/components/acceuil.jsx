@@ -1,48 +1,102 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './acceuil.css';
+import CanvasJSReact from '@canvasjs/react-charts';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-function NumberInput() {
-  const [number, setNumber] = useState('');
-  const [displayedNumber, setDisplayedNumber] = useState(null);
-  const [expenses, setExpenses] = useState([]);
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-  useEffect(() => {
-    const storedNumber = localStorage.getItem('savedNumber');
-    if (storedNumber) {
-      setDisplayedNumber(storedNumber);
-    }
-  }, []);
+const ExpenseStatistics = () => {
+  const [data, setData] = useState({
+    revenueData: [],
+    expenseData: [],
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
-  useEffect(() => {
-    const token=localStorage.getItem("token");
-    axios
-      .get('http://localhost:5000/recentDepenses',{headers: { "Authorization": `Bearer ${token}` }})
-      .then((response) => {
-        setExpenses(response.data);
-      })
-      .catch((error) => {
-        console.error('Erreur lors de la récupération des dépenses : ', error);
+  const fetchData = async () => {
+    setLoading(true);
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get('http://localhost:5000/Acceuil', {
+        params: {
+          startDate: startDate?.toISOString(),
+          endDate: endDate?.toISOString(),
+        },
+        headers: { "Authorization": `Bearer ${token}` }
       });
-  }, []);
 
-  const handleNumberChange = (e) => {
-    const inputNumber = e.target.value;
-    setNumber(inputNumber);
+      const revenueData = response.data.Revenue.map((item) => ({
+        x: new Date(item.Date),
+        y: item.Total,
+      }));
+
+      const expenseData = response.data.Depense.map((item) => ({
+        x: new Date(item.Date),
+        y: item.Total,
+      }));
+
+      setData({ revenueData, expenseData });
+    } catch (error) {
+      console.error('Error fetching data:', error.message);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleDisplay = () => {
-    setDisplayedNumber(Number(number));
-    localStorage.setItem('savedNumber', number);
+  useEffect(() => {
+    fetchData();
+  }, [startDate, endDate]);
+
+  const optionsRevenue = {
+    title: {
+      text: '',
+    },
+    axisX: {
+      title: 'Date',
+    },
+    axisY: {
+      title: 'Montant',
+    },
+    data: [
+      {
+        type: 'line',
+        name: 'Revenue',
+        showInLegend: true,
+        dataPoints: data.revenueData,
+      },
+    ],}
+    const optionsDepense = {
+      title: {
+        text: '',
+      },
+      axisX: {
+        title: 'Date',
+      },
+      axisY: {
+        title: 'Montant',
+      },
+      data:[
+        {
+        type: 'line',
+        name: 'Dépenses',
+        showInLegend: true,
+        dataPoints: data.expenseData,
+      },
+    ],
   };
-  
+
   return (
     <div>
-    
-    <header>
+      <header>
 			<nav>
       <ul className="navbar"><li className="logo" >Gestion de Finance Personnelle</li>			  <li><a href="/acceuil">Acceuil</a></li>
-			  <li><a href="/AjoutDepense">Ajout Depense</a></li>
+			  <li><a href="/AjoutDepense">Ajout</a></li>
 			  <li><a href="/Historique">Historique</a></li>
 			  <li><a href="Statistique">Statistique</a></li>
 			  <li><a href="/Contact">
@@ -62,7 +116,7 @@ function NumberInput() {
            </a>
             </li>
 			<li>
-			<link href="path/to/bootstrap-icons.css" rel="stylesheet" />
+			<link href="path/to/bootstrap-icons.css" rel="stylesheet"/>
              <a href="/Home"  >
              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="35" fill="currentColor" className="bi bi-escape" viewBox="0 0 16 16">
              <path d="M8.538 1.02a.5.5 0 1 0-.076.998 6 6 0 1 1-6.445 6.444.5.5 0 0 0-.997.076A7 7 0 1 0 8.538 1.02Z"/>
@@ -73,43 +127,54 @@ function NumberInput() {
 			 </ul>
 			</nav>
 		  </header>
-
-    <div className="home-container">
-      <div className="form-container">
-        <div className="left-section">
-        <h2>Bienvenue</h2>
-          <input
-            type="number"
-            value={number}
-            onChange={handleNumberChange}
-            placeholder="Veuillez entrer votre solde"
-            className="input-field"
-          />
-          <button className='btn btn-secondary' onClick={handleDisplay} >
-            Afficher
-          </button>
-          {displayedNumber !== null && (
-            <p id="result">Votre solde est : {displayedNumber}</p>
-          )}
+      <div className="statistic_container">
+        <div className="graphic">
+          <h1>Revenues par rapport au temps</h1>
+          <div className='date-filters'>
+            <h6>Plage de date:</h6>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              placeholderText="Select start date"
+            />
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              placeholderText="Select end date"
+            />
+          </div>
+          <div style={{ width: '80%', margin: 'auto' }}>
+            {data.revenueData.length > 0  ? (
+              <CanvasJSChart options={optionsRevenue} />
+            ) : null}
+          </div>
         </div>
-        <div className="right-section">
-        <h2>Votre dépense récente :</h2>
-        <ul className="expense-list">
-        {expenses.map((expense) => (
-          <li key={expense.id}>
-          Montant : {expense.Montant} 
-        <br></br> Catégorie : {expense.Categorie} 
-        <br></br> Date : {expense.Date} 
-        <br></br> Description : {expense.Description}
-           </li>
-        ))}
-
-          </ul>
+      </div>
+      <div className="statistic_container">
+        <div className="graphic">
+          <h1>Depenses par rapport au temps</h1>
+          <div className='date-filters'>
+            <h6>Plage de date:</h6>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              placeholderText="Select start date"
+            />
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              placeholderText="Select end date"
+            />
+          </div>
+          <div style={{ width: '80%', margin: 'auto' }}>
+            { data.expenseData.length > 0 ? (
+              <CanvasJSChart options={optionsDepense} />
+            ) : null}
+          </div>
         </div>
       </div>
     </div>
-    </div>
   );
-}
+};
 
-export default NumberInput;
+export default ExpenseStatistics;

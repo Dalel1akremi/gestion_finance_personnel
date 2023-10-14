@@ -318,4 +318,30 @@ export const Email= async(req, res) => {
           res.status(500).json({ message: 'Error changing password' });
         }
       };
+    
+
+
+      export const checkUnaddedExpenses = async (req, res) => {
+        try {
+          const yesterday = new Date();
+          console.log(yesterday)
+          yesterday.setDate(yesterday.getDate() - 1);
+          console.log(yesterday)
+
+          const unaddedExpenses = await Depense.findAll({
+            where: {
+              id: req.user.userId,              Date: {
+                [Sequelize.Op.between]: [new Date(yesterday.toISOString().slice(0, 10)), yesterday],
+              },
+         } });
+          
+         
       
+          res.json({ hasUnaddedExpenses: unaddedExpenses.length > 0 });
+        } catch (error) {
+          console.error('Error checking unadded expenses:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+        }
+      };
+      
+

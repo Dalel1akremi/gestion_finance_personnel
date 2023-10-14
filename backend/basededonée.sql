@@ -36,11 +36,6 @@ ALTER TABLE `categories`
   MODIFY `id_cat` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
-INSERT INTO categories (nom) VALUES ('Vétements');
-INSERT INTO categories (nom) VALUES ('Aliment');
-INSERT INTO categories (nom) VALUES ('Sport');
-INSERT INTO categories (nom) VALUES ('Autres Dépenses');
-
 CREATE TABLE depenses (
    id_dep INT(11) NOT NULL AUTO_INCREMENT,
    id INT(11),

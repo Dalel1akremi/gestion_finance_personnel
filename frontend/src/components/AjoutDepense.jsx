@@ -11,6 +11,7 @@ const AjoutDepense = () => {
 	const [msg, setMsg] = useState('');
 	const [categories, setCategories] = useState([]); 
 	const [successMessage, setSuccessMessage] = useState('');
+	
 	useEffect(() => {
 		const fetchCategories = async () => {
 		  try {

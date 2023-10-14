@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import NotificationComponent from './Notification';
+import './Notification.css';
 import './acceuil.css';
 
 function NumberInput() {
   const [number, setNumber] = useState('');
   const [displayedNumber, setDisplayedNumber] = useState(null);
   const [expenses, setExpenses] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     const storedNumber = localStorage.getItem('savedNumber');
@@ -34,6 +37,33 @@ function NumberInput() {
   const handleDisplay = () => {
     setDisplayedNumber(Number(number));
     localStorage.setItem('savedNumber', number);
+  };
+
+  
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    axios.get('http://localhost:5000/checkUnaddedExpenses',
+      {
+        headers: { "Authorization": `Bearer ${token}` }
+      }
+    )
+      .then((response) => {
+        const hasUnaddedExpenses = response.data.hasUnaddedExpenses;
+        console.log('hasUnaddedExpenses:', hasUnaddedExpenses);
+        setShowNotification(!hasUnaddedExpenses); // Invert the condition to show the notification only if there are no unadded expenses
+      })
+      .catch((error) => {
+        console.error('Error checking for unadded expenses:', error);
+      });
+  }, []);
+
+  const handleYesClick = () => {
+    window.location.href = '/AjoutDepense';
+  };
+
+  const handleNoClick = () => {
+    setShowNotification(false);
   };
   
   return (
@@ -75,6 +105,15 @@ function NumberInput() {
 		  </header>
 
     <div className="home-container">
+    <div className='notifaction'>
+        {showNotification && (
+          <NotificationComponent
+            message="Vous avez des dépenses non ajoutées hier. Voulez-vous les ajouter?"
+            onYesClick={handleYesClick}
+            onNoClick={handleNoClick}
+          />
+        )}
+        </div>
       <div className="form-container">
         <div className="left-section">
         <h2>Bienvenue</h2>

@@ -7,13 +7,10 @@ import CanvasJSReact from '@canvasjs/react-charts';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-<<<<<<< HEAD
 
   
   
-=======
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
->>>>>>> origin/dalel3
 
 const ExpenseStatistics = () => {
   const [data, setData] = useState({
@@ -99,7 +96,6 @@ const ExpenseStatistics = () => {
     ],
   };
 
-<<<<<<< HEAD
   
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -127,8 +123,6 @@ const ExpenseStatistics = () => {
     setShowNotification(false);
   };
   
-=======
->>>>>>> origin/dalel3
   return (
     <div>
       <header>
@@ -165,10 +159,8 @@ const ExpenseStatistics = () => {
 			 </ul>
 			</nav>
 		  </header>
-<<<<<<< HEAD
-
-    <div className="home-container">
-    <div className='notifaction'>
+      <div className="statistic_container">
+      <div className='notifaction'>
         {showNotification && (
           <NotificationComponent
             message="Vous avez des dépenses non ajoutées hier. Voulez-vous les ajouter?"
@@ -177,24 +169,6 @@ const ExpenseStatistics = () => {
           />
         )}
         </div>
-      <div className="form-container">
-        <div className="left-section">
-        <h2>Bienvenue</h2>
-          <input
-            type="number"
-            value={number}
-            onChange={handleNumberChange}
-            placeholder="Veuillez entrer votre solde"
-            className="input-field"
-          />
-          <button className='btn btn-secondary' onClick={handleDisplay} >
-            Afficher
-          </button>
-          {displayedNumber !== null && (
-            <p id="result">Votre solde est : {displayedNumber}</p>
-          )}
-=======
-      <div className="statistic_container">
         <div className="graphic">
           <h1>Revenues par rapport au temps</h1>
           <div className='date-filters'>
@@ -215,7 +189,6 @@ const ExpenseStatistics = () => {
               <CanvasJSChart options={optionsRevenue} />
             ) : null}
           </div>
->>>>>>> origin/dalel3
         </div>
       </div>
       <div className="statistic_container">

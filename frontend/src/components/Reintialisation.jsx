@@ -23,7 +23,7 @@ const Reintialisation = () => {
 	<header>
 			<nav>
 			<ul className="navbar"><li className="logo" >Gestion de Finance Personnelle</li>			  <li><a href="/acceuil">Acceuil</a></li>
-			  <li><a href="/AjoutDepense">Ajout Depense</a></li>
+			  <li><a href="/AjoutDepense">Ajout </a></li>
 			  <li><a href="/Historique">Historique</a></li>
 			  <li><a href="Statistique">Statistique</a></li>
 			  <li><a href="/Contact">

@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import Depense from "../models/Depense.js";
+import Revenue from "../models/Revenue.js";
 import crypto from 'crypto';
 import Categories from '../models/Categories.js';
 import bcrypt from "bcryptjs";
@@ -85,21 +86,8 @@ export const AjoutDepense = async (req, res) => {
 
 
 
-export const getRecentDepenses = async (req, res) => {
-    try {
-      const recentDepenses = await Depense.findAll({
-        
-        order: [['id','DESC']],
-        limit: 1, 
-        id: req.user.userId,
-      });
- 
-      res.json(recentDepenses);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ msg: 'Error while fetching recent depenses' });
-    }
-  };
+
+
   export const Historique = async (req, res) => {
     try {
       const startDate = req.query.startDate || '00-00-0000'; // Assuming you pass startDate and endDate as query parameters

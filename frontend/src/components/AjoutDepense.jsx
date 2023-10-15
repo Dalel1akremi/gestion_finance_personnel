@@ -114,7 +114,7 @@ const AjoutDepense = () => {
 				<div className="signup_form_container">
 					<div className="right">
 						<form className="form_container" onSubmit={Ajout}>
-						<h2>Ajout Depenses</h2>
+						<h2>Ajout</h2>
 							<input
 								type="float"
 								placeholder="Montant"

@@ -64,7 +64,6 @@ CREATE TABLE revenues(
    Montant DOUBLE NOT NULL,
    Date DATE NOT NULL,
    Description VARCHAR(500) NOT NULL,
-   id INT(11),
    createdAt DATETIME NOT NULL,
    updatedAt DATETIME NOT NULL,
    FOREIGN KEY (id)REFERENCES Users(id) ,

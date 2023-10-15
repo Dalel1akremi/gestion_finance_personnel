@@ -5,8 +5,8 @@ function NotificationComponent({ message, onYesClick, onNoClick }) {
     <div className="notification show">
               <p>{message}</p>
       <div className="notification-buttons">
-        <button className="yes-button" onClick={onYesClick}>Oui</button>
-        <button className="no-button" onClick={onNoClick}>Non</button>
+        <button className="btn btn-success" onClick={onYesClick}>Oui</button>
+        <button className="btn btn-danger" onClick={onNoClick}>Non</button>
       </div>
     </div>
   );

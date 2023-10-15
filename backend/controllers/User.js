@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import Depense from "../models/Depense.js";
+import Revenue from "../models/Revenue.js";
 import crypto from 'crypto';
 import Categories from '../models/Categories.js';
 import bcrypt from "bcryptjs";
@@ -85,21 +86,8 @@ export const AjoutDepense = async (req, res) => {
 
 
 
-export const getRecentDepenses = async (req, res) => {
-    try {
-      const recentDepenses = await Depense.findAll({
-        
-        order: [['id','DESC']],
-        limit: 1, 
-        id: req.user.userId,
-      });
- 
-      res.json(recentDepenses);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ msg: 'Error while fetching recent depenses' });
-    }
-  };
+
+
   export const Historique = async (req, res) => {
     try {
       const startDate = req.query.startDate || '00-00-0000'; // Assuming you pass startDate and endDate as query parameters
@@ -284,5 +272,36 @@ export const Email= async(req, res) => {
             res.json({ message: 'E-mail de réinitialisation de mot de passe envoyé avec succès' });
           }
         });
+      };
+      export const Acceuil = async (req, res) => {
+        try {
+          var tempsEnMs = Date.now();
+          const startDate = req.query.startDate ?? '00-00-0000'; // Assuming you pass startDate and endDate as query parameters
+          const endDate = req.query.endDate ?? tempsEnMs ;
+          // Group and sum the Montant by Categorie
+          const statisticsRevenue = await Revenue.findAll({
+            attributes: ['Date', [db.fn('SUM', db.col('Montant')), 'Total']],
+            group: ['Date'],
+            where: {
+              Date: {
+                [db.Sequelize.Op.between]: [startDate, endDate],},
+                id: req.user.userId,},
+          });
+         
+          
+          const statisticsDepense = await Depense.findAll({
+            attributes: ['Date', [db.fn('SUM', db.col('Montant')), 'Total']],
+            group: ['Date'],
+            where: {
+              Date: {
+                [db.Sequelize.Op.between]: [startDate, endDate],},
+                id: req.user.userId,},
+          });
+         
+          res.json({Depense:statisticsDepense,Revenue:statisticsRevenue});
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ msg: 'Error while fetching statistics' });
+        }
       };
       

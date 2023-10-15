@@ -1,7 +1,8 @@
 import User from "../models/User.js";
 import Depense from "../models/Depense.js";
-import crypto from 'crypto';
 import Categories from '../models/Categories.js';
+import revenues from'../models/Revenue.js';
+import crypto from 'crypto';
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
@@ -105,7 +106,7 @@ export const getRecentDepenses = async (req, res) => {
       const startDate = req.query.startDate || '00-00-0000'; // Assuming you pass startDate and endDate as query parameters
       const endDate = req.query.endDate || new Date();
       
-      const Historique = await Depense.findAll({
+      const Depensees = await Depense.findAll({
         order: [['id_dep', 'DESC']],
         limit: 1000000000000000,
         
@@ -117,11 +118,23 @@ export const getRecentDepenses = async (req, res) => {
           id: req.user.userId,
         },
       });
+      const Revenues = await revenues.findAll({
+        order: [['id_rev', 'DESC']],
+        limit: 1000000000000000,
+        
+        where: {
+          Date: {
+            [db.Sequelize.Op.between]: [new Date(startDate), new Date(endDate)],
+            
+          },
+          id: req.user.userId,
+        },
+      });
   
-      res.json(Historique);
+      res.json({ Depenses: Depensees, revenues: Revenues });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ msg: 'Error while fetching recent depenses' });
+      return res.status(500).json({ msg: 'Error while fetching recent revenue' });
     }
   };
   
@@ -247,37 +260,50 @@ export const Email= async(req, res) => {
         }
       };
       
-      export const reset_password= async (req, res) => {
+      export const reset_password = async (req, res) => {
         const { email } = req.body;
-      const transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-          user: 'yakinebenali5@gmail.com', 
-        pass: 'offpdprxkhmnutjd'
-        },
-      });
-      function generateResetToken() {
-        return crypto.randomBytes(32).toString('hex');
-      }
-     
-        const resetToken = generateResetToken(); 
-        const resetLink = `http://localhost:3000/reset_password/${resetToken}`;
       
-        const mailOptions = {
-          from: 'yakinebenali5@gmail.com',
-          to: email,
-          subject: 'Réinitialisation de mot de passe',
-          text: `Cliquez sur le lien suivant pour réinitialiser votre mot de passe : ${resetLink}`,
-        };
-      
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.error(error);
-            res.status(500).json({ message: 'Une erreur est survenue lors de lenvoi de le-mail de réinitialisation de mot de passe' });
-          } else {
-            console.log('E-mail de réinitialisation de mot de passe envoyé : ' + info.response);
-            res.json({ message: 'E-mail de réinitialisation de mot de passe envoyé avec succès' });
-          }
+        const transporter = nodemailer.createTransport({
+          service: 'Gmail',
+          auth: {
+            user: 'yakinebenali5@gmail.com',
+            pass: 'offpdprxkhmnutjd',
+          },
         });
-      };
       
+        // Générer un nouveau mot de passe aléatoire
+        const password = crypto.randomBytes(8).toString('hex');
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        try {
+          // Mettre à jour le mot de passe dans la base de données
+          const user = await User.findOne({ where: { email: email } });
+      
+          if (!user) {
+            return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+          }
+      
+          user.password = hashedPassword;
+          await user.save();
+      
+          // Envoyer le nouveau mot de passe par e-mail
+          const mailOptions = {
+            from: 'votre_email@gmail.com',
+            to: email,
+            subject: 'Réinitialisation de votre mot de passe',
+            text: `Votre nouveau mot de passe est : ${password}`,
+          };
+      
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.error(error);
+              return res.status(500).json({ message: 'Erreur lors de lenvoi de le-mail.' });
+            }
+      
+            res.status(200).json({ message: 'Nouveau mot de passe envoyé par e-mail.' });
+          });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Erreur lors de la réinitialisation du mot de passe.' });
+        }
+      };

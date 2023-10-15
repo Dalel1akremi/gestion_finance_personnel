@@ -11,9 +11,10 @@
 }
 .middle-section{
 	background-color:white;
-	width: 90%;
-	height: 50%;
+	width: 80%;
+	height: 40%;
 	text-align: center;
+	margin-top: 10%;
 }
 h2{
 	color: red;
@@ -49,4 +50,7 @@ h2{
   }
   h6{
 	margin-right: 23%;
+  }
+  span{
+margin-top: 100px;
   }

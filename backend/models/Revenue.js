@@ -4,7 +4,7 @@ import User from "./User.js";
 
 const { DataTypes } = Sequelize;
 
-const Revenue = db.define("Revenues", {
+const revenues = db.define("revenues", {
   id_rev: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -13,14 +13,12 @@ const Revenue = db.define("Revenues", {
   Montant: {
     type: DataTypes.FLOAT,
   },
- 
   Date: {
     type: DataTypes.DATE,
   },
   Description: {
     type: DataTypes.STRING,
   }, 
-
  
   id: {
     type: DataTypes.INTEGER,
@@ -32,6 +30,7 @@ const Revenue = db.define("Revenues", {
   },
 });
 
-Revenue.belongsTo(User, { foreignKey: 'id', targetKey: 'id' });
 
-export default Revenue;
+revenues.belongsTo(User, { foreignKey: 'id', targetKey: 'id' });
+
+export default revenues;

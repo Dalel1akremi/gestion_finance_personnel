@@ -1,36 +1,48 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Historique.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { MDBTabs, MDBTabsItem, MDBTabsLink, MDBTabsPane } from 'mdb-react-ui-kit';
+
 function Historique() {
   const [number, setNumber] = useState('');
   const [displayedNumber, setDisplayedNumber] = useState(null);
-  const [expenses, setExpenses] = useState([]);
-  const [startDate, setStartDate] = useState(null); // Start date for filtering
-  const [endDate, setEndDate] = useState(null); // End date for filtering
+  const [depense, setDepense] = useState([]);
+  const [revune, setRevune] = useState([]);  
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [justifyActive, setJustifyActive] = useState('tab1');
 
-  // Fetch expenses data based on startDate and endDate
+  const handleJustifyClick = (value) => {
+    if (value === justifyActive) {
+      return;
+    }
+    setJustifyActive(value);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token=localStorage.getItem("token");
+        const token = localStorage.getItem("token");
         const response = await axios.get('http://localhost:5000/Historique', {
-          params: { startDate, endDate },
-         
-            headers: { "Authorization": `Bearer ${token}` }
-    
-        
+          params: { startDate, endDate, type: justifyActive === 'tab2' ? 'Depenses' : 'revenues' },
+          headers: { "Authorization": `Bearer ${token}` }
         });
-        setExpenses(response.data);
+
+        setDepense(response.data.Depenses)
+        setRevune(response.data.revenues)
+  
+
       } catch (error) {
         console.error('Erreur lors de la récupération des dépenses : ', error);
       }
     };
-
+  
     fetchData();
-  }, []);
-
+  }, [startDate, endDate, justifyActive]);
+  
+  
   const handleNumberChange = (e) => {
     const inputNumber = e.target.value;
     setNumber(inputNumber);
@@ -48,10 +60,10 @@ function Historique() {
   const handleEndDateChange = (date) => {
     setEndDate(date);
   };
-
   return (
     <div>
-      <header>
+        
+        <header>
 			<nav>
       <ul className="navbar"><li className="logo" >Gestion de Finance Personnelle</li>			  <li><a href="/acceuil">Acceuil</a></li>
 			  <li><a href="/AjoutDepense">Ajout</a></li>
@@ -85,44 +97,100 @@ function Historique() {
 			 </ul>
 			</nav>
 		  </header>
-
-
       <div className="essential-section">
         <div className="middle-section">
-          <h2 id="h">Historiques :</h2>
-          <div className="date-filters">
-          <h6>Plage de date:</h6> 
-            <DatePicker
-              selected={startDate}
-              onChange={handleStartDateChange}
-              placeholderText="Start Date"
-            />
-            <DatePicker
-              selected={endDate}
-              onChange={handleEndDateChange}
-              placeholderText="End Date"
-            />
-          </div>
-          <table className="table table-bordered">
-            <thead className="thead-dark">
-              <tr>
-                <th scope="col">Montant</th>
-                <th scope="col">Catégorie</th>
-                <th scope="col">Date</th>
-                <th scope="col">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {expenses.map((expense) => (
-                <tr key={expense.id}>
-                  <td>{expense.Montant}</td>
-                  <td>{expense.Categorie}</td>
-                  <td>{expense.Date}</td>
-                  <td>{expense.Description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <MDBTabs>
+            <MDBTabsItem>
+              <MDBTabsLink onClick={() => handleJustifyClick('tab1')} active={justifyActive === 'tab1'}>
+                Depense
+              </MDBTabsLink>
+            </MDBTabsItem>
+            <MDBTabsItem>
+              <MDBTabsLink onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'}>
+                Revenue
+              </MDBTabsLink>
+            </MDBTabsItem>
+          </MDBTabs>
+
+          <MDBTabsPane show={justifyActive === 'tab1'}>
+            <h2 id="h">Historiques :</h2>
+            <div className="date-filters">
+              <h6>Plage de date:</h6>
+              <DatePicker
+                selected={startDate}
+                onChange={handleStartDateChange}
+                placeholderText="Start Date"
+              />
+              <DatePicker
+                selected={endDate}
+                onChange={handleEndDateChange}
+                placeholderText="End Date"
+              />
+            </div>
+            {depense && depense.length > 0 ? (
+              <table className="table table-bordered">
+                <thead className="thead-dark">
+                  <tr>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Catégorie</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {depense.map((expense) => (
+                    <tr key={expense.id_dep}>
+                      <td>{expense.Montant}</td>
+                      <td>{expense.Categorie}</td>
+                      <td>{expense.Date}</td>
+                      <td>{expense.Description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No depense to display.</p>
+            )}
+          </MDBTabsPane>
+
+          <MDBTabsPane show={justifyActive === 'tab2'}>
+            <h2 id="h">Historiques :</h2>
+            <div className="date-filters">
+              <h6>Plage de date:</h6>
+              <DatePicker
+                selected={startDate}
+                onChange={handleStartDateChange}
+                placeholderText="Start Date"
+              />
+              <DatePicker
+                selected={endDate}
+                onChange={handleEndDateChange}
+                placeholderText="End Date"
+              />
+            </div>
+            {revune && revune.length > 0 ? (
+              <table className="table table-bordered">
+                <thead className="thead-dark">
+                  <tr>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {revune.map((expense) => (
+                    <tr key={expense.id_rev}>
+                      <td>{expense.Montant}</td>
+                      <td>{expense.Date}</td>
+                      <td>{expense.Description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No revenue to display.</p>
+            )}
+          </MDBTabsPane>
         </div>
       </div>
     </div>

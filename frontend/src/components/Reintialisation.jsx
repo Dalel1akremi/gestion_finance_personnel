@@ -1,26 +1,27 @@
-// ResetPasswordForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import "./Registre.css";
-const Reintialisation = () => {
+
+function ResetPassword() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post('http://localhost:5000/reset_password', { email });
       setMessage(response.data.message);
     } catch (error) {
-      console.error(error.response.data);
       setMessage('Une erreur est survenue lors de la réinitialisation du mot de passe.');
+      console.error(error);
     }
   };
 
   return (
-    <div>
-	<header>
+    
+       <div>
+    
+    <header>
 			<nav>
 			<ul className="navbar"><li className="logo" >Gestion de Finance Personnelle</li>			  <li><a href="/acceuil">Acceuil</a></li>
 			  <li><a href="/AjoutDepense">Ajout </a></li>
@@ -43,7 +44,7 @@ const Reintialisation = () => {
            </a>
             </li>
 			<li>
-			<link href="path/to/bootstrap-icons.css" rel="stylesheet"/>
+			<link href="path/to/bootstrap-icons.css" rel="stylesheet" />
              <a href="/Home"  >
              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="35" fill="currentColor" className="bi bi-escape" viewBox="0 0 16 16">
              <path d="M8.538 1.02a.5.5 0 1 0-.076.998 6 6 0 1 1-6.445 6.444.5.5 0 0 0-.997.076A7 7 0 1 0 8.538 1.02Z"/>
@@ -54,26 +55,24 @@ const Reintialisation = () => {
 			 </ul>
 			</nav>
 		  </header>
-		  <div className="Registre_container">
-          <div  className="Registre"   >
+      <div className="essential-section">
+        <div className="middle-section">
       <h2>Réinitialisation du mot de passe</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Adresse e-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className='input'
-        />
+      <form onSubmit={handleResetPassword}>
         <div>
-        <button type="submit">Envoyer</button></div>
-       
+        <input  value={email} 
+							onChange={(e) => setEmail(e.target.value)}
+							requiredlabel='Email address' id='form1' type='email'
+							className="input"
+							placeholder="Email"/>
+        </div>
+        <button type="submit">Réinitialiser le mot de passe</button>
       </form>
       <p>{message}</p>
     </div>
     </div>
     </div>
   );
-};
+}
 
-export default Reintialisation;
+export default ResetPassword;

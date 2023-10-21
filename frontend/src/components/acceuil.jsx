@@ -6,9 +6,8 @@ import './acceuil.css';
 import CanvasJSReact from '@canvasjs/react-charts';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Line, Circle } from 'rc-progress';
 
-
-  
   
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -22,6 +21,31 @@ const ExpenseStatistics = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [showNotification, setShowNotification] = useState(false);
+  const [totalMontant, setTotalMontant] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [remainingMontant, setRemainingMontant] = useState(0);
+  const [percentageOfExpenses, setPercentageOfExpenses] = useState(0);
+  const CircularChart = ({ value, label, color }) => {
+    return (
+      <div className="circle">
+        <h2>{label}</h2>
+        <div style={{ width: '150px' }}>
+          <Circle
+            percent={value}
+            strokeWidth="8"
+            trailWidth="8"
+            strokeColor={color}
+          />
+          <div className="chart-value">{value}</div>
+        </div>
+      </div>
+    );
+  };
+  
+  
+  
+  
+  
   const fetchData = async () => {
     setLoading(true);
 
@@ -122,6 +146,54 @@ const ExpenseStatistics = () => {
   const handleNoClick = () => {
     setShowNotification(false);
   };
+  useEffect(() => {
+    const fetchMontantAcceuilData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get('http://localhost:5000/MontantAcceuil', {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+  
+        // Update state with data from the API response
+        console.log('API Response Data:', response.data);
+        setTotalMontant(response.data.TotalMontant);
+        setTotalExpenses(response.data.TotalExpenses);
+        setRemainingMontant(response.data.RemainingMontant);
+        setPercentageOfExpenses(response.data.PercentageOfExpenses);
+        console.log('State After Update:', totalMontant, totalExpenses, remainingMontant, percentageOfExpenses);
+        
+      } catch (error) {
+        console.error('Error fetching MontantAcceuil data:', error.message);
+      }
+    };
+  
+    fetchMontantAcceuilData();
+  }, []);
+
+  const CircularPercentageChart = ({ percentage }) => {
+    return (
+      <div>
+        <h1>Your Circular Percentage Chart</h1>
+        <div style={{ width: '100px' }}>
+          <Line
+            percent={percentage}
+            strokeWidth="8"
+            trailWidth="8"
+            strokeColor="#3498db" // Color for the progress arc
+          />
+        </div>
+        <div style={{ width: '100px' }}>
+          <Circle
+            percent={percentage}
+            strokeWidth="8"
+            trailWidth="8"
+            strokeColor="#3498db" // Color for the progress arc
+          />
+        </div>
+      </div>
+    );
+  };
+  
   
   return (
     <div>
@@ -214,6 +286,37 @@ const ExpenseStatistics = () => {
           </div>
         </div>
       </div>
+      
+      <div className="statistic_container">
+  <div className="circle total-montant">
+    <div className="message-container">
+      <div className="message-title">Votre montant total</div>
+      <CircularChart value={totalMontant} label="" color="#3498db" />
+    </div>
+  </div>
+  <div className="circle total-expenses">
+    <div className="message-container">
+      <div className="message-title">Dépenses totales</div>
+      <CircularChart value={totalExpenses} label="" color="#e74c3c" />
+    </div>
+  </div>
+  <div className="circle remaining-montant">
+    <div className="message-container">
+      <div className="message-title">Votre montant restant</div>
+      <CircularChart value={remainingMontant} label="" color="#27ae60" />
+    </div>
+  </div>
+  <div className="circle percentage">
+  <div className="message-container">
+    <div className="message-title">Pourcentage(%)</div>
+    <CircularChart value={percentageOfExpenses} label="" color="#f1c40f" />
+  </div>
+</div>
+
+</div>
+
+
+
     </div>
   );
 };

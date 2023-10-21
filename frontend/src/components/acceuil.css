@@ -56,3 +56,34 @@ nav {
 	text-align: center;
 	font-weight: bold;
 }
+/* Circular Chart Styles */
+.chart-value {
+	font-size: 2em;
+	color: #3498db;
+  }
+  
+  .circle {
+	text-align: center;
+	margin: 50px; /* Increase margin to add more space between circles */
+  }
+  
+  .circle-value {
+	font-size: 5em;
+	color: #3498db;
+  }
+  
+ 
+  
+  .message-title {
+	font-size: 1.5em;
+	margin-top: 10px;
+	color: #777; /* Change to your desired message title color */
+  }
+  .message-container {
+	text-align: center;
+	margin-top: 20px;
+	background: rgba(255, 255, 255, 0.8); /* Translucent white background */
+	padding: 20px;
+	border-radius: 10px; /* Add rounded corners for a professional look */
+	color: #333; /* Change to your desired text color */
+  }

@@ -1,5 +1,5 @@
 import express from "express";
-import {Login,Register,AjoutDepense,Acceuil, Historique, Email, Statistique,getCategories,addCategory,editCategory,deleteCategory,reset_password,changePassword,checkUnaddedExpenses} from "../controllers/User.js"
+import {Login,Register,AjoutDepense,Acceuil, Historique, Email, Statistique,getCategories,addCategory,editCategory,deleteCategory,reset_password,changePassword,checkUnaddedExpenses,MontantAcceuil} from "../controllers/User.js"
 import { verifyToken } from "../middelware/VerifyToken.js";
 const router = express.Router();
 
@@ -18,4 +18,6 @@ router.delete('/deleteCategory', verifyToken, deleteCategory)
 router.post('/reset_password',reset_password)
 router.post('/changePassword', verifyToken,changePassword)
 router.get('/checkUnaddedExpenses',verifyToken,checkUnaddedExpenses)
+router.get('/MontantAcceuil', verifyToken,MontantAcceuil)
+
 export default router;

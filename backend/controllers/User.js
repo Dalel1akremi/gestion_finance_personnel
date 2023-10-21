@@ -391,3 +391,47 @@ export const Email= async(req, res) => {
           return res.status(500).json({ msg: 'Error while fetching statistics' });
         }
       };
+
+      export const MontantAcceuil = async (req, res) => {
+        try {
+          const startDate = req.query.startDate ?? '00-00-0000'; // Assuming you pass startDate and endDate as query parameters
+          const endDate = req.query.endDate ?? new Date();
+      
+          // Calculate the total revenue
+          const totalRevenue = await Revenue.sum('Montant', {
+            where: {
+              Date: {
+                [db.Sequelize.Op.between]: [startDate, endDate],
+              },
+              id: req.user.userId,
+            },
+          });
+      
+          // Calculate the total expenses
+          const totalExpenses = await Depense.sum('Montant', {
+            where: {
+              Date: {
+                [db.Sequelize.Op.between]: [startDate, endDate],
+              },
+              id: req.user.userId,
+            },
+          });
+      
+          // Calculate the difference between revenue and expenses
+          const remainingAmount = totalRevenue - totalExpenses;
+      
+          // Calculate the percentage
+          const percentage = (remainingAmount / totalRevenue) * 100;
+      
+          res.json({
+            TotalMontant: totalRevenue, // Rename this to TotalMontant
+            TotalExpenses: totalExpenses,
+            RemainingMontant: remainingAmount,
+            PercentageOfExpenses: percentage, // Rename this to PercentageOfExpenses
+          });
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ msg: 'Error while fetching data' });
+        }
+      };
+      

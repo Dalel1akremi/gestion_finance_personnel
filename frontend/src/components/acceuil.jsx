@@ -46,79 +46,8 @@ const ExpenseStatistics = () => {
   
   
   
-  const fetchData = async () => {
-    setLoading(true);
-
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get('http://localhost:5000/Acceuil', {
-        params: {
-          startDate: startDate?.toISOString(),
-          endDate: endDate?.toISOString(),
-        },
-        headers: { "Authorization": `Bearer ${token}` }
-      });
-
-      const revenueData = response.data.Revenue.map((item) => ({
-        x: new Date(item.Date),
-        y: item.Total,
-      }));
-
-      const expenseData = response.data.Depense.map((item) => ({
-        x: new Date(item.Date),
-        y: item.Total,
-      }));
-
-      setData({ revenueData, expenseData });
-    } catch (error) {
-      console.error('Error fetching data:', error.message);
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [startDate, endDate]);
-
-  const optionsRevenue = {
-    title: {
-      text: '',
-    },
-    axisX: {
-      title: 'Date',
-    },
-    axisY: {
-      title: 'Montant',
-    },
-    data: [
-      {
-        type: 'line',
-        name: 'Revenue',
-        showInLegend: true,
-        dataPoints: data.revenueData,
-      },
-    ],}
-    const optionsDepense = {
-      title: {
-        text: '',
-      },
-      axisX: {
-        title: 'Date',
-      },
-      axisY: {
-        title: 'Montant',
-      },
-      data:[
-        {
-        type: 'line',
-        name: 'Dépenses',
-        showInLegend: true,
-        dataPoints: data.expenseData,
-      },
-    ],
-  };
+  
+  
 
   
   useEffect(() => {
@@ -241,53 +170,9 @@ const ExpenseStatistics = () => {
           />
         )}
         </div>
-        <div className="graphic">
-          <h1>Revenues par rapport au temps</h1>
-          <div className='date-filters'>
-            <h6>Plage de date:</h6>
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              placeholderText="Select start date"
-            />
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              placeholderText="Select end date"
-            />
-          </div>
-          <div style={{ width: '80%', margin: 'auto' }}>
-            {data.revenueData.length > 0  ? (
-              <CanvasJSChart options={optionsRevenue} />
-            ) : null}
-          </div>
-        </div>
-      </div>
-      <div className="statistic_container">
-        <div className="graphic">
-          <h1>Depenses par rapport au temps</h1>
-          <div className='date-filters'>
-            <h6>Plage de date:</h6>
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              placeholderText="Select start date"
-            />
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              placeholderText="Select end date"
-            />
-          </div>
-          <div style={{ width: '80%', margin: 'auto' }}>
-            { data.expenseData.length > 0 ? (
-              <CanvasJSChart options={optionsDepense} />
-            ) : null}
-          </div>
-        </div>
-      </div>
+        <div className="statistic_container">
+         
       
-      <div className="statistic_container">
   <div className="circle total-montant">
     <div className="message-container">
       <div className="message-title">Votre montant total</div>
@@ -314,7 +199,7 @@ const ExpenseStatistics = () => {
 </div>
 
 </div>
-
+</div>
 
 
     </div>

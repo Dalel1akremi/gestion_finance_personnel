@@ -37,13 +37,7 @@ nav {
 	justify-content: center;
 
   }
-  .graphic{
-    background-color: rgba(255, 255, 255, 0.9);
-	width: 70%;
-	height: 50%;
-	text-align: center;
-    margin-top: 10%;
-  }
+
   #hcouleur{
     color:brown;
   }
@@ -81,8 +75,8 @@ nav {
   }
   .message-container {
 	text-align: center;
-	margin-top: 20px;
-	background: rgba(255, 255, 255, 0.8); /* Translucent white background */
+	margin-top: 70%;
+	background: rgba(255, 255, 255, 0.9); /* Translucent white background */
 	padding: 20px;
 	border-radius: 10px; /* Add rounded corners for a professional look */
 	color: #333; /* Change to your desired text color */

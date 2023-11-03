@@ -152,7 +152,10 @@ function Historique() {
               <p>No depense to display.</p>
             )}
           </MDBTabsPane>
-
+          </div>
+</div>
+            
+            <div className="hist-section">
           <MDBTabsPane show={justifyActive === 'tab2'}>
             <h2 id="h">Historiques :</h2>
             <div className="date-filters">
@@ -191,9 +194,9 @@ function Historique() {
               <p>No revenue to display.</p>
             )}
           </MDBTabsPane>
-        </div>
-      </div>
-    </div>
+  
+  </div>
+</div>
   );
 }
 

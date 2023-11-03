@@ -16,6 +16,14 @@
 	text-align: center;
 	margin-top: 10%;
 }
+.hist-section{
+	background-color:white;
+	width: 80%;
+	height: 40%;
+	text-align: center;
+	margin-top: -30%;
+	margin-left: 10%;
+}
 h2{
 	color: red;
 	text-align: center;

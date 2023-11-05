@@ -1,69 +1,173 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Historique.css';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { MDBTabs, MDBTabsItem, MDBTabsLink, MDBTabsPane } from 'mdb-react-ui-kit';
-
-function Historique() {
-  const [number, setNumber] = useState('');
-  const [displayedNumber, setDisplayedNumber] = useState(null);
-  const [depense, setDepense] = useState([]);
-  const [revune, setRevune] = useState([]);  
+import './acceuil.css';
+import './Statistique.css';
+import CanvasJSReact from '@canvasjs/react-charts';
+import {
+  Chart,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js/auto';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Bar } from 'react-chartjs-2';
+Chart.register(LinearScale, CategoryScale, Title, Tooltip, Legend);
+const ExpenseStatistics = () => {
+  const [data, setData] = useState({
+    revenueData: [],
+    expenseData: [],
+      labels: [],
+      datasets: [
+        {
+          label: 'Dépense par Catégorie',
+          data: [],
+          backgroundColor: ["blueviolet", "greenyellow", "rgb(255, 0, 212)", "rgb(0, 255, 255)", "yellow"],
+        },
+      ],
+    });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [justifyActive, setJustifyActive] = useState('tab1');
 
-  const handleJustifyClick = (value) => {
-    if (value === justifyActive) {
-      return;
+  // Define options for charts here
+  
+ 
+  const fetch = async () => {
+    setLoading(true);
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get('http://localhost:5000/Acceuil', {
+        params: {
+          startDate: startDate?.toISOString(),
+          endDate: endDate?.toISOString(),
+        },
+        headers: { "Authorization": `Bearer ${token}`}
+      });
+
+      const revenueData = response.data.Revenue.map((item) => ({
+        x: new Date(item.Date),
+        y: item.Total,
+      }));
+
+      const expenseData = response.data.Depense.map((item) => ({
+        x: new Date(item.Date),
+        y: item.Total,
+      }));
+
+      setData({ revenueData, expenseData });
+    } catch (error) {
+      console.error('Error fetching data:', error.message);
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
-    setJustifyActive(value);
+  };
+  
+  useEffect(() => {
+    fetch(); // Appeler la fonction fetch
+  }, [startDate, endDate]);
+  const optionsRevenue = {
+    title: {
+      text: '',
+    },
+    axisX: {
+      title: 'Date',
+    },
+    axisY: {
+      title: 'Montant',
+    },
+    data: [
+      {
+        type: 'line',
+        name: 'Revenue',
+        showInLegend: true,
+        dataPoints: data.revenueData,
+      },
+    ],
+  };
+  
+  const optionsDepense = {
+    title: {
+      text: '',
+    },
+    axisX: {
+      title: 'Date',
+    },
+    axisY: {
+      title: 'Montant',
+    },
+    data: [
+      {
+        type: 'line',
+        name: 'Dépenses',
+        showInLegend: true,
+        dataPoints: data.expenseData,
+      },
+    ],
   };
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get('http://localhost:5000/Historique', {
-          params: { startDate, endDate, type: justifyActive === 'tab2' ? 'Depenses' : 'revenues' },
+
+        const response = await axios.get('http://localhost:5000/statistics', {
+          params: {
+            startDate: startDate?.toISOString(),
+            endDate: endDate?.toISOString(),
+          },
           headers: { "Authorization": `Bearer ${token}` }
         });
 
-        setDepense(response.data.Depenses)
-        setRevune(response.data.revenues)
-  
+        const categories = response.data.map((entry) => entry.Categorie);
+        const totalAmounts = response.data.map((entry) => entry.Total);
 
+        setData({
+          labels: categories,
+          datasets: [
+            {
+              label: 'Dépense par Catégorie',
+              data: totalAmounts,
+              backgroundColor: ["blueviolet", "greenyellow", "rgb(255, 0, 212)", "rgb(0, 255, 255)", "yellow"],
+            },
+          ],
+        });
       } catch (error) {
-        console.error('Erreur lors de la récupération des dépenses : ', error);
+        console.error('Error fetching data:', error.message);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
-  
+
     fetchData();
-  }, [startDate, endDate, justifyActive]);
-  
-  
-  const handleNumberChange = (e) => {
-    const inputNumber = e.target.value;
-    setNumber(inputNumber);
-  };
+  },  [startDate, endDate]);
 
-  const handleDisplay = () => {
-    setDisplayedNumber(Number(number));
-    localStorage.setItem('savedNumber', number);
-  };
-
-  const handleStartDateChange = (date) => {
-    setStartDate(date);
-  };
-
-  const handleEndDateChange = (date) => {
-    setEndDate(date);
+  const options = {
+    indexAxis: 'y',
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Dépense par Catégorie',
+      },
+    },
   };
   return (
     <div>
-        
-        <header>
+          <header>
 			<nav>
       <ul className="navbar"><li className="logo" >Gestion de Finance Personnelle</li>			  <li><a href="/acceuil">Acceuil</a></li>
 			  <li><a href="/AjoutDepense">Ajout</a></li>
@@ -97,108 +201,75 @@ function Historique() {
 			 </ul>
 			</nav>
 		  </header>
-      <div className="essential-section">
-        <div className="middle-section">
-          <MDBTabs>
-            <MDBTabsItem>
-              <MDBTabsLink onClick={() => handleJustifyClick('tab1')} active={justifyActive === 'tab1'}>
-                Depense
-              </MDBTabsLink>
-            </MDBTabsItem>
-            <MDBTabsItem>
-              <MDBTabsLink onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'}>
-                Revenue
-              </MDBTabsLink>
-            </MDBTabsItem>
-          </MDBTabs>
-
-          <MDBTabsPane show={justifyActive === 'tab1'}>
-            <h2 id="h">Historiques :</h2>
-            <div className="date-filters">
-              <h6>Plage de date:</h6>
-              <DatePicker
-                selected={startDate}
-                onChange={handleStartDateChange}
-                placeholderText="Start Date"
-              />
-              <DatePicker
-                selected={endDate}
-                onChange={handleEndDateChange}
-                placeholderText="End Date"
-              />
-            </div>
-            {depense && depense.length > 0 ? (
-              <table className="table table-bordered">
-                <thead className="thead-dark">
-                  <tr>
-                    <th scope="col">Montant</th>
-                    <th scope="col">Catégorie</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {depense.map((expense) => (
-                    <tr key={expense.id_dep}>
-                      <td>{expense.Montant}</td>
-                      <td>{expense.Categorie}</td>
-                      <td>{expense.Date}</td>
-                      <td>{expense.Description}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <p>No depense to display.</p>
-            )}
-          </MDBTabsPane>
-
-          <MDBTabsPane show={justifyActive === 'tab2'}>
-            <h2 id="h">Historiques :</h2>
-            <div className="date-filters">
-              <h6>Plage de date:</h6>
-              <DatePicker
-                selected={startDate}
-                onChange={handleStartDateChange}
-                placeholderText="Start Date"
-              />
-              <DatePicker
-                selected={endDate}
-                onChange={handleEndDateChange}
-                placeholderText="End Date"
-              />
-            </div>
-            {revune && revune.length > 0 ? (
-              <table className="table table-bordered">
-                <thead className="thead-dark">
-                  <tr>
-                    <th scope="col">Montant</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {revune.map((expense) => (
-                    <tr key={expense.id_rev}>
-                      <td>{expense.Montant}</td>
-                      <td>{expense.Date}</td>
-                      <td>{expense.Description}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-            ) : (
-              <p>No revenue to display.</p>
-              
-            )}
-          </MDBTabsPane>
-          
+      <div className="statistic_container">
+        <div className="graphic">
+          <h1>Statistique des depenses par rapport a categories</h1>
+          <div className='date-filters'>
+            <h6>Plage de date:</h6>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              placeholderText="Select start date"
+            />
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              placeholderText="Select end date"
+            />
+          </div>
+          <div style={{ width: '80%', margin: 'auto' }}>
+            {data !== undefined ? <Bar data={data} /> : null}
+          </div>
+        </div>
+      </div>
+      <div className="statistic_container">
+        <div className="graphic">
+          <h1>Revenues par rapport au temps</h1>
+          <div className='date-filters'>
+            <h6>Plage de date:</h6>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              placeholderText="Select start date"
+            />
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              placeholderText="Select end date"
+            />
+          </div>
+          <div style={{ width: '80%', margin: 'auto' }}>
+            {data.revenueData && data.revenueData.length > 0 ? (
+              <CanvasJSReact.CanvasJSChart options={optionsRevenue} />
+            ) : null}
+          </div>
+        </div>
+      </div>
+      <div className="statistic_container">
+        <div className="graphic">
+          <h1>Depenses par rapport au temps</h1>
+          <div className='date-filters'>
+            <h6>Plage de date:</h6>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              placeholderText="Select start date"
+            />
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              placeholderText="Select end date"
+            />
+          </div>
+          <div style={{ width: '80%', margin: 'auto' }}>
+            {data.expenseData && data.expenseData.length > 0 ? (
+              <CanvasJSReact.CanvasJSChart options={optionsDepense} />
+            ) : null}
+          </div>
         </div>
       </div>
     </div>
-    
   );
-}
+};
 
-export default Historique;
+export default ExpenseStatistics;

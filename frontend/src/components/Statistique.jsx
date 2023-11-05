@@ -218,7 +218,9 @@ const ExpenseStatistics = () => {
             />
           </div>
           <div style={{ width: '80%', margin: 'auto' }}>
-            {data !== undefined ? <Bar data={data} /> : null}
+            {data.expenseData && data.expenseData.length > 0 ? (
+              <CanvasJSReact.CanvasJSChart options={optionsDepense} />
+            ) : null}
           </div>
         </div>
       </div>
@@ -265,6 +267,50 @@ const ExpenseStatistics = () => {
             {data.expenseData && data.expenseData.length > 0 ? (
               <CanvasJSReact.CanvasJSChart options={optionsDepense} />
             ) : null}
+          </div>
+        </div>
+      </div>
+      <div className="statistic_container">
+        <div className="graphic">
+          <h1>Revenues par rapport au temps</h1>
+          <div className='date-filters'>
+            <h6>Plage de date:</h6>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              placeholderText="Select start date"
+            />
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              placeholderText="Select end date"
+            />
+          </div>
+          <div style={{ width: '80%', margin: 'auto' }}>
+            {data.revenueData && data.revenueData.length > 0 ? (
+              <CanvasJSReact.CanvasJSChart options={optionsRevenue} />
+            ) : null}
+          </div>
+        </div>
+      </div>
+      <div className="statistic_container">
+        <div className="graphic">
+          <h1>Depenses par rapport au temps</h1>
+          <div className='date-filters'>
+            <h6>Plage de date:</h6>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              placeholderText="Select start date"
+            />
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              placeholderText="Select end date"
+            />
+          </div>
+          <div style={{ width: '80%', margin: 'auto' }}>
+            {data !== undefined ? <Bar data={data} /> : null}
           </div>
         </div>
       </div>

@@ -206,7 +206,7 @@ export const Email= async(req, res) => {
           });
       
           res.json({ msg: "Category added successfully", newCategory });
-        } catch (error) {
+        } catch (error) {    
           console.error("Error in addCategory:", error);
           return res.status(500).json({ msg: "Erreur", error: error.message });
         }

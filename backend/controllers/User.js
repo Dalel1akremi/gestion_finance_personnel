@@ -57,31 +57,44 @@ export const Login = async(req, res) => {
         res.status(404).json({msg:"User Not Found "});
     }
 }
-export const AjoutDepense = async (req, res) => {
-  const { Montant, Categorie, Date, Description } = req.body;
-  try {
-    const category = await Categories.findOne({
-      where: { nom_cat: Categorie },
-    });
 
-    if (!category) {
-      return res.status(400).json({ msg: "Category not found" });
+export const Ajout = async (req, res) => {
+  const { Montant, Categorie, Date, Description } = req.body;
+
+  try {
+    if (Categorie) {
+      const category = await Categories.findOne({
+        where: { nom_cat: Categorie },
+      });
+
+      if (!category) {
+        return res.status(400).json({ msg: "Category not found" });
+      }
+
+      const newTransaction = await Depense.create({
+        Montant: Montant,
+        Categorie: Categorie,
+        Date: Date,
+        Description: Description,
+        id_cat: category.id_cat,
+        id: req.user.userId,
+      });
+
+      res.json({ msg: "Expense added successfully", newTransaction });
+    } else {
+      // Assuming Revenue is the model for handling revenues
+      const newTransaction = await Revenue.create({
+        Montant: Montant,
+        Date: Date,
+        Description: Description,
+        id: req.user.userId,
+      });
+
+      res.json({ msg: "Revenue added successfully", newTransaction });
     }
-  
-    const newExpense = await Depense.create({
-      
-      Montant: Montant,
-      Categorie: Categorie, 
-      Date: Date,
-      Description: Description,
-      id_cat: category.id_cat, 
-      id: req.user.userId,
-  
-    });
-    res.json({ msg: "Ajouté avec succès", newExpense });
   } catch (error) {
-    console.error("Error in AjoutDepense:", error);
-    return res.status(500).json({ msg: "Erreur", error: error.message });
+    console.error("Error in AjoutTransaction:", error);
+    return res.status(500).json({ msg: "Error adding transaction", error: error.message });
   }
 };
 

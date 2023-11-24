@@ -99,6 +99,7 @@ function Statistique() {
       },
     ],
   };
+  
   const optionsDepense = {
     title: {
       text: '',
@@ -109,15 +110,16 @@ function Statistique() {
     axisY: {
       title: 'Montant',
     },
-    data:[
+    data: [
       {
-      type: 'line',
-      name: 'Dépenses',
-      showInLegend: true,
-      dataPoints: data.expenseData,
-    },
-  ],
-};
+        type: 'line',
+        name: 'Dépenses',
+        showInLegend: true,
+        dataPoints: data && data.expenseData ? data.expenseData : [],
+      },
+    ],
+  };
+  
   const handleStartDateChange = (date) => {
     setStartDate(date);
   };

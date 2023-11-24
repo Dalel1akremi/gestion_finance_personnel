@@ -57,7 +57,6 @@ export const Login = async(req, res) => {
         res.status(404).json({msg:"User Not Found "});
     }
 }
-
 export const Ajout = async (req, res) => {
   const { Montant, Categorie, Date, Description } = req.body;
 
@@ -71,7 +70,7 @@ export const Ajout = async (req, res) => {
         return res.status(400).json({ msg: "Category not found" });
       }
 
-      const newTransaction = await Depense.create({
+      const Depenses = await Depense.create({
         Montant: Montant,
         Categorie: Categorie,
         Date: Date,
@@ -80,23 +79,22 @@ export const Ajout = async (req, res) => {
         id: req.user.userId,
       });
 
-      res.json({ msg: "Expense added successfully", newTransaction });
-    } else {
       // Assuming Revenue is the model for handling revenues
-      const newTransaction = await Revenue.create({
+      const Revenues = await Revenue.create({
         Montant: Montant,
         Date: Date,
         Description: Description,
         id: req.user.userId,
       });
 
-      res.json({ msg: "Revenue added successfully", newTransaction });
+      res.json({ Depense: Depenses, Revenue: Revenues });
     }
   } catch (error) {
     console.error("Error in AjoutTransaction:", error);
     return res.status(500).json({ msg: "Error adding transaction", error: error.message });
   }
 };
+
 
 
 

@@ -5,15 +5,14 @@ import './AjoutDepense.css';
 import { MDBTabs, MDBTabsItem, MDBTabsLink, MDBTabsPane } from 'mdb-react-ui-kit';
 
 const AjoutDepense = () => {
-  const [Montant, setFMontant] = useState('');
+  const [Montant, setMontant] = useState('');
   const [Categorie, setCategorie] = useState('');
   const [Date, setDate] = useState('');
   const [Description, setDescription] = useState('');
-  const [msg, setMsg] = useState('');
   const [categories, setCategories] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
   const [justifyActive, setJustifyActive] = useState('tab1');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleJustifyClick = (value) => {
@@ -28,7 +27,9 @@ const AjoutDepense = () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.get('http://localhost:5000/getCategories', {
-          headers: { Authorization: `Bearer ${token}` },
+         
+          headers: { "Authorization": `Bearer ${token}` },
+          
         });
         setCategories(response.data);
       } catch (error) {
@@ -38,45 +39,46 @@ const AjoutDepense = () => {
 
     fetchCategories();
   }, []);
-
   const fetchData = async () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
+      const payload = {
+        Montant,
+        Categorie,
+        Date,
+        Description,
+        type: justifyActive === 'tab2' ? 'Depense' : 'Revenue',
+      };
       const response = await axios.post(
-        'http://localhost:5000/ajout',
+        'http://localhost:5000/Ajout',
+        payload,
         {
-          Montant,
-          Categorie,
-          Date,
-          Description,
-          type: justifyActive === 'tab2' ? 'Depense' : 'Revenue',
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { "Authorization": `Bearer ${token}` },
         }
       );
-
-      // Check if the response indicates success (you can customize this based on your API)
+  
+      // Check if the response indicates success
       if (response.status === 200) {
-        setSuccessMessage('Expense added successfully');
-
-        setFMontant('');
+        setSuccessMessage('Transaction added successfully');
+        setMontant('');
         setCategorie('');
         setDate('');
         setDescription('');
       } else {
-        setMsg('Expense adding failed');
+        setError('Transaction adding failed');
       }
     } catch (error) {
       // Handle unexpected errors here
       console.error(error);
-      setMsg('An unexpected error occurred');
+      setError(error.message);
+      
     } finally {
       setLoading(false);
     }
   };
-
+  
+  
   return (
     <div>
       <div className="essential-section">
@@ -84,12 +86,12 @@ const AjoutDepense = () => {
           <MDBTabs>
             <MDBTabsItem>
               <MDBTabsLink onClick={() => handleJustifyClick('tab1')} active={justifyActive === 'tab1'}>
-                Deoense
+              Revenue
               </MDBTabsLink>
             </MDBTabsItem>
             <MDBTabsItem>
               <MDBTabsLink onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'}>
-                Revenue
+               Depense
               </MDBTabsLink>
             </MDBTabsItem>
           </MDBTabs>
@@ -97,17 +99,18 @@ const AjoutDepense = () => {
           {justifyActive === 'tab1' && (
             <MDBTabsPane show={justifyActive === 'tab1'}>
               <form className="form_container">
-                <h2>Ajout depense </h2>
+                <h2>Ajout Revenue </h2>
                 <input
-                  type="float"
+                   type="number"
                   placeholder="Montant"
-                  name="Montant"
-                  value={Montant}
-                  onChange={(e) => setFMontant(e.target.value)}
-                  required
+                 name="Montant"
+                 value={Montant}
+                  onChange={(e) => setMontant(e.target.value)}
+                   required
                   className="input"
-                />
-                <select
+                   />
+              
+              <select
                   placeholder="Categorie"
                   name="Categorie"
                   value={Categorie}
@@ -142,27 +145,30 @@ const AjoutDepense = () => {
                   required
                   className="input"
                 />
+               
                 <button type="button" onClick={fetchData} className="btn btn-secondary">
                   Ajouter
                 </button>
               </form>
             </MDBTabsPane>
           )}
-		  
+
           {justifyActive === 'tab2' && (
             <MDBTabsPane show={justifyActive === 'tab2'}>
               <form className="form_container">
-                <h2>Ajout revenue</h2>
+                <h2>Ajout Depense</h2>
                 <input
-                  type="float"
-                  placeholder="Montant"
-                  name="Montant"
-                  value={Montant}
-                  onChange={(e) => setFMontant(e.target.value)}
-                  required
-                  className="input"
-                />
-                <select
+  type="number"
+  placeholder="Montant"
+  name="Montant"
+  value={Montant}
+  onChange={(e) => setMontant(e.target.value)}
+  required
+  className="input"
+/>
+
+               
+<select
                   placeholder="Categorie"
                   name="Categorie"
                   value={Categorie}

@@ -13,6 +13,10 @@ const revenues = db.define("revenues", {
   Montant: {
     type: DataTypes.FLOAT,
   },
+  Categorie: {
+    type: DataTypes.STRING,
+    allowNull: false, 
+  },
   Date: {
     type: DataTypes.DATE,
   },

@@ -61,6 +61,7 @@ COMMIT;
 CREATE TABLE revenues(
    id_rev VARCHAR(50),
    id int(11),
+    Categorie VARCHAR(50),
    Montant DOUBLE NOT NULL,
    Date DATE NOT NULL,
    Description VARCHAR(500) NOT NULL,

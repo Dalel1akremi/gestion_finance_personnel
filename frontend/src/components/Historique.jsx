@@ -190,15 +190,13 @@ function Historique() {
                   ))}
                 </tbody>
               </table>
-
             ) : (
               <p>No revenue to display.</p>
-              
             )}
           </MDBTabsPane>
-  
-  </div>
-</div>
+        </div>
+      </div>
+
   );
 }
 

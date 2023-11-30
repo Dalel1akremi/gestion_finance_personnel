@@ -72,7 +72,7 @@ const Login = () => {
 			 </ul>
 			</nav>
 		  </header>
-		  <h5 id="abir">Bienvenue sur notre site web dédié au suivi des dépenses <br></br>personnelles, votre outil essentiel pour mieux gérer votre <br></br>argent.<br></br> Suivez vos dépenses, prenez le contrôle de vos finances et<br></br> atteignez vos objectifs financiers.<br></br> Explorez nos fonctionnalités dès maintenant.</h5>	
+		  
 		  <div className="login_container ">
 		
 		 

@@ -146,8 +146,8 @@ export const Email= async(req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-            user: 'yakinebenali5@gmail.com', 
-        pass: 'offpdprxkhmnutjd' 
+            user: 'dalelakremi2020@gmail.com', 
+        pass: 'zlsu azok yuck naoo' 
         },});
         const mailOptions = {
             from:'abir@gmail.com',

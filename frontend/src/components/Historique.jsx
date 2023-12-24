@@ -194,9 +194,9 @@ function Historique() {
               <p>No revenue to display.</p>
             )}
           </MDBTabsPane>
-        </div>
-      </div>
-
+  
+  </div>
+</div>
   );
 }
 
